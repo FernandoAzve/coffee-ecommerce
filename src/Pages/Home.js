@@ -1,6 +1,8 @@
 // src/Home.js
 import React from 'react';
 import '../Styles/HomeStyles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Home() {
   return (
@@ -17,6 +19,9 @@ function Home() {
           <a href="/arabica">Cafés Arábica</a>
           <a href="/frutados">Cafés Frutados</a>
           <a href="/acessorios">Acessórios</a>
+          <a href="/carrinho">
+            <i className="bi bi-cart"></i>
+          </a>
           <a href="/login">Login</a>
           <a href="/cadastro">Cadastre-se</a>
         </nav>
@@ -27,7 +32,7 @@ function Home() {
       </div>
 
       <section className="mais-comprados">
-        <h2>Mais comprados</h2>
+        <h2 className="center-content">Mais comprados</h2>
         <div className="produtos">
           {[...Array(6)].map((_, index) => (
             <div key={index} className="produto">

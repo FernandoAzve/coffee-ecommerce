@@ -1,6 +1,7 @@
-// src/Acessorios.js
 import React from 'react';
 import '../Styles/CafeStyles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Acessorios() {
   return (
@@ -17,15 +18,20 @@ function Acessorios() {
           <a href="/arabica">Cafés Arábica</a>
           <a href="/frutados">Cafés Frutados</a>
           <a href="/acessorios">Acessórios</a>
+          <a href="/carrinho">
+            <i className="bi bi-cart"></i>
+          </a>
           <a href="/login">Login</a>
           <a href="/cadastro">Cadastre-se</a>
         </nav>
       </header>
 
-      <h1>Acessórios</h1>
-      <p className="description">
-        Descubra a excelência em cada detalhe com nossa seleção de acessórios para café gourmet.
-      </p>
+      <div className="center-content">
+        <h1>Acessórios</h1>
+        <p className="description">
+          Descubra a excelência em cada detalhe com nossa seleção de acessórios para café gourmet.
+        </p>
+      </div>
 
       <section className="mais-comprados">
         <div className="produtos">

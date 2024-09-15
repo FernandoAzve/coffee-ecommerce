@@ -1,6 +1,7 @@
-// src/CafeArabica.js
 import React from 'react';
 import '../Styles/CafeStyles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function CafeArabica() {
   return (
@@ -17,15 +18,20 @@ function CafeArabica() {
           <a href="/arabica">Cafés Arábica</a>
           <a href="/frutados">Cafés Frutados</a>
           <a href="/acessorios">Acessórios</a>
-          <a href="/">Login</a>
-          <a href="/">Cadastre-se</a>
+          <a href="/carrinho">
+            <i className="bi bi-cart"></i>
+          </a>
+          <a href="/login">Login</a>
+          <a href="/cadastro">Cadastre-se</a>
         </nav>
       </header>
 
-      <h1>Cafés 100% Arábica</h1>
-      <p className="description">
-        Descubra a pureza e a excelência dos cafés 100% arábica. Experimente sabores extraordinários em cada xícara.
-      </p>
+      <div className="center-content">
+        <h1>Cafés 100% Arábica</h1>
+        <p className="description">
+          Descubra a pureza e a excelência dos cafés 100% arábica. Experimente sabores extraordinários em cada xícara.
+        </p>
+      </div>
 
       <section className="mais-comprados">
         <div className="produtos">
