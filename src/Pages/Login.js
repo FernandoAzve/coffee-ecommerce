@@ -1,8 +1,19 @@
 import React from 'react';
+import { useAuth } from '../AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function Login() {
+const Login = () => {
+  const { login } = useAuth();
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    // Lógica de autenticação aqui
+    login();
+  };
+
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
+    <div className="home-page">
       <div className="top-bar">
         <a href="/dicas">Dicas</a>
         <a href="/certificacoes">Certificações</a>
@@ -15,45 +26,50 @@ function Login() {
           <a href="/arabica">Cafés Arábica</a>
           <a href="/frutados">Cafés Frutados</a>
           <a href="/acessorios">Acessórios</a>
+          <a href="/carrinho">
+            <i className="bi bi-cart"></i>
+          </a>
           <a href="/login">Login</a>
           <a href="/cadastro">Cadastre-se</a>
         </nav>
       </header>
-      <h2>Realize o Login</h2>
+      <h2 className="center-content">Realize o Login</h2>
       <form style={{ maxWidth: '300px', margin: '0 auto' }}>
         <div style={{ marginBottom: '20px' }}>
-          <input 
-            type="email" 
-            placeholder="e-mail" 
+          <input
+            type="email"
+            placeholder="e-mail"
             style={{
-              width: '100%', 
-              padding: '10px', 
+              width: '100%',
+              padding: '10px',
               marginBottom: '10px',
               borderRadius: '5px'
-            }} 
+            }}
           />
-          <input 
-            type="password" 
-            placeholder="senha" 
+          <input
+            type="password"
+            placeholder="senha"
             style={{
-              width: '100%', 
-              padding: '10px', 
+              width: '100%',
+              padding: '10px',
               borderRadius: '5px'
-            }} 
+            }}
           />
         </div>
-        <button 
-          type="submit" 
-          style={{
-            padding: '10px 20px', 
-            borderRadius: '5px', 
-            backgroundColor: '#333', 
-            color: '#fff', 
-            cursor: 'pointer'
-          }}
-        >
-          Entrar
-        </button>
+        <div style={{ textAlign: 'center' }}>
+          <button
+            type="submit"
+            style={{
+              padding: '10px 20px',
+              borderRadius: '5px',
+              backgroundColor: '#333',
+              color: '#fff',
+              cursor: 'pointer'
+            }}
+          >
+            Entrar
+          </button>
+        </div>
       </form>
     </div>
   );

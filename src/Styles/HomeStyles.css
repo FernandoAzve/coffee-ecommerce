@@ -1,86 +1,84 @@
-/* src/HomeStyles.css */
 .home-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 10px;
-    color: white;
-  }
-  
-  .logo {
-    font-size: 24px;
-  }
-  
-  .nav a {
-    margin: 0 10px;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .banner {
-    background-color: #ddd;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    font-size: 24px;
-  }
-  
-  .mais-comprados {
-    margin-top: 40px;
-  }
-  
-  .mais-comprados h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .produtos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  
-  .produto {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .imagem {
-    background-color: #eee;
-    height: 150px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  /* Home.css */
-  .top-bar {
-    display: flex;
-    justify-content: flex-end;
-    background-color: white;
-    padding: 10px 20px;
-  }
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
 
-  .top-bar a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #333;
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px;
+  color: white;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.nav a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.banner {
+  background-color: #ddd;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.mais-comprados {
+  margin-top: 20px;
+}
+
+.mais-comprados h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.produto {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.imagem {
+  background-color: #eee;
+  height: 150px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.top-bar a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function Cadastro() {
+function FinalizarPedido() {
   return (
     <div className="home-page">
       <div className="top-bar">
@@ -24,13 +24,12 @@ function Cadastro() {
           <a href="/cadastro">Cadastre-se</a>
         </nav>
       </header>
-
-      <h2 className="center-content">Realize o Cadastro</h2>
+      <h2 className="center-content">Finalizar pedido</h2>
       <form style={{ maxWidth: '300px', margin: '0 auto' }}>
         <div style={{ marginBottom: '20px' }}>
           <input
             type="text"
-            placeholder="nome completo"
+            placeholder="Endereço de entrega"
             style={{
               width: '100%',
               padding: '10px',
@@ -40,27 +39,7 @@ function Cadastro() {
           />
           <input
             type="text"
-            placeholder="CPF"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="email"
-            placeholder="e-mail"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="password"
-            placeholder="senha"
+            placeholder="Número"
             style={{
               width: '100%',
               padding: '10px',
@@ -70,7 +49,7 @@ function Cadastro() {
           />
           <input
             type="text"
-            placeholder="endereço"
+            placeholder="Bairro"
             style={{
               width: '100%',
               padding: '10px',
@@ -80,7 +59,7 @@ function Cadastro() {
           />
           <input
             type="text"
-            placeholder="telefone"
+            placeholder="Cidade"
             style={{
               width: '100%',
               padding: '10px',
@@ -88,6 +67,39 @@ function Cadastro() {
               borderRadius: '5px'
             }}
           />
+          <input
+            type="text"
+            placeholder="CEP"
+            style={{
+              width: '100%',
+              padding: '10px',
+              marginBottom: '10px',
+              borderRadius: '5px'
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Complemento"
+            style={{
+              width: '100%',
+              padding: '10px',
+              marginBottom: '10px',
+              borderRadius: '5px'
+            }}
+          />
+          <div style={{ textAlign: 'left', marginBottom: '10px' }}>
+            <label>Esse pedido é para presente?</label>
+            <div>
+              <label>
+                <input type="radio" name="presente" value="sim" style={{ marginRight: '5px' }} />
+                Sim
+              </label>
+              <label style={{ marginLeft: '10px' }}>
+                <input type="radio" name="presente" value="nao" style={{ marginRight: '5px' }} />
+                Não
+              </label>
+            </div>
+          </div>
         </div>
         <div style={{ textAlign: 'center' }}>
           <button
@@ -100,7 +112,7 @@ function Cadastro() {
               cursor: 'pointer'
             }}
           >
-            Cadastrar-se
+            Finalizar pedido
           </button>
         </div>
       </form>
@@ -108,4 +120,4 @@ function Cadastro() {
   );
 }
 
-export default Cadastro;
+export default FinalizarPedido;
