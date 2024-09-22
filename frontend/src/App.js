@@ -14,6 +14,10 @@ import Carrinho from './Pages/Carrinho';
 import FinalizarPedido from './Pages/FinalizarPedido';
 import MeusPedidos from './Pages/MeusPedidos';
 import Header from './Components/Header';
+import LoginAdmin from './Pages/LoginAdmin';
+import UsuariosAdmin from './Pages/UsuariosAdmin';
+import PedidosAdmin from './Pages/PedidosAdmin';
+import EstoquetoAdmin from './Pages/EstoqueAdmin';
 
 function App() {
   return (
@@ -32,6 +36,10 @@ function App() {
           <Route path="/dicas" element={<Dicas />} />
           <Route path="/finalizar-pedido" element={<FinalizarPedido />} />
           <Route path="/meus-pedidos" element={<MeusPedidos />} />
+          <Route path="/login-admin" element={<LoginAdmin />} />
+          <Route path="/usuarios-admin" element={<UsuariosAdmin />} />
+          <Route path="/pedidos-admin" element={<PedidosAdmin />} />
+          <Route path="/estoque-admin" element={<EstoquetoAdmin />} />
         </Routes>
       </Router>
     </AuthProvider>

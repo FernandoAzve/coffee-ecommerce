@@ -1,0 +1,22 @@
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 10px;
+}
+
+.table-admin {
+    margin: 30px;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+}
+
+.table-admin th,
+.table-admin td {
+    padding: 15px 30px;
+    /* Aumente o padding horizontal para maior espaçamento */
+    text-align: left;
+    white-space: nowrap;
+}
