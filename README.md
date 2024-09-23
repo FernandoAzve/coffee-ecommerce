@@ -13,8 +13,8 @@ Após clonar o projeto em seu ambiente local, siga os passos abaixo:
 
 ### Frontend
 
-1. Entre na pasta "frontend" e rode o comando ```npm install ```
-2. Com todas as dependências baixadas, rode o comando ```npm start ```
+1. Entre na pasta "frontend" e rode o comando ```npm install```
+2. Com todas as dependências baixadas, rode o comando ```npm start```
 3. Se tudo der certo, o site irá abrir no endereço ```http://localhost:3000/```
 
 ### MySQL
