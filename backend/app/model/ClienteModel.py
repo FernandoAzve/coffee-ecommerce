@@ -1,4 +1,5 @@
 from app import db
+from werkzeug.security import generate_password_hash
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
@@ -23,7 +24,6 @@ class Cliente(db.Model):
             'nome': self.nome_cliente,
             'cpf': self.cpf_cliente,
             'email': self.email_cliente,
-            'senha': self.senha_hash_cliente,
             'endereco': {
                 'logradouro': self.endereco_logradouro_cliente,
                 'bairro': self.endereco_bairro_cliente,
@@ -35,3 +35,7 @@ class Cliente(db.Model):
             },
             'telefone': self.telefone_cliente
         }
+
+    @staticmethod
+    def hash_senha(senha):
+        return generate_password_hash(senha)

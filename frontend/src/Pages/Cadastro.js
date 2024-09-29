@@ -1,107 +1,233 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Header from '../Components/Header';
+import TopBar from '../Components/TopBar';
 
 function Cadastro() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    nome_cliente: '',
+    cpf_cliente: '',
+    email_cliente: '',
+    senha_cliente: '',
+    endereco_logradouro_cliente: '',
+    endereco_bairro_cliente: '',
+    endereco_cidade_cliente: '',
+    endereco_estado_cliente: '',
+    endereco_numero_cliente: '',
+    endereco_complemento_cliente: '',
+    endereco_cep_cliente: '',
+    telefone_cliente: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/clientes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert('Cadastro realizado com sucesso!');
+        console.log('Resposta do backend:', data);
+        navigate('/');
+      } else {
+        alert('Erro ao realizar o cadastro.');
+      }
+    } catch (error) {
+      console.error('Erro ao enviar os dados:', error);
+      alert('Erro ao conectar com o servidor.');
+    }
+  };
+
   return (
     <div className="home-page">
-      <div className="top-bar">
-        <a href="/dicas">Dicas</a>
-        <a href="/certificacoes">Certificações</a>
-      </div>
-      <header className="header">
-        <div className="logo">LOGO</div>
-        <nav className="nav">
-          <a href="/">Home</a>
-          <a href="/cursos">Cursos</a>
-          <a href="/arabica">Cafés Arábica</a>
-          <a href="/frutados">Cafés Frutados</a>
-          <a href="/acessorios">Acessórios</a>
-          <a href="/carrinho">
-            <i className="bi bi-cart"></i>
-          </a>
-          <a href="/login">Login</a>
-          <a href="/cadastro">Cadastre-se</a>
-        </nav>
-      </header>
 
-      <h2 className="center-content">Realize o Cadastro</h2>
-      <form style={{ maxWidth: '300px', margin: '0 auto' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <TopBar />
+
+      <Header />
+
+      <h2 className="text-center mb-4 mt-4">Realize o Cadastro</h2>
+
+      <form className="mx-auto" style={{ maxWidth: '500px' }} onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Nome Completo</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-person"></i></span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nome completo"
+              name="nome_cliente"
+              value={formData.nome_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">CPF</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-credit-card"></i></span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="CPF"
+              name="cpf_cliente"
+              value={formData.cpf_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">E-mail</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-envelope"></i></span>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="E-mail"
+              name="email_cliente"
+              value={formData.email_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Senha</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-lock"></i></span>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Senha"
+              name="senha_cliente"
+              value={formData.senha_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <h5 className="mt-4">Endereço</h5>
+
+        <div className="mb-3">
+          <label className="form-label">Logradouro</label>
           <input
             type="text"
-            placeholder="nome completo"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="text"
-            placeholder="CPF"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="email"
-            placeholder="e-mail"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="password"
-            placeholder="senha"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="text"
-            placeholder="endereço"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="text"
-            placeholder="telefone"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
+            className="form-control"
+            placeholder="Logradouro"
+            name="endereco_logradouro_cliente"
+            value={formData.endereco_logradouro_cliente}
+            onChange={handleChange}
           />
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <button
-            type="submit"
-            style={{
-              padding: '10px 20px',
-              borderRadius: '5px',
-              backgroundColor: '#333',
-              color: '#fff',
-              cursor: 'pointer'
-            }}
-          >
-            Cadastrar-se
-          </button>
+
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Número</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Número"
+              name="endereco_numero_cliente"
+              value={formData.endereco_numero_cliente}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Complemento</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Complemento"
+              name="endereco_complemento_cliente"
+              value={formData.endereco_complemento_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Bairro</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Bairro"
+              name="endereco_bairro_cliente"
+              value={formData.endereco_bairro_cliente}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">CEP</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="CEP"
+              name="endereco_cep_cliente"
+              value={formData.endereco_cep_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Cidade</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Cidade"
+              name="endereco_cidade_cliente"
+              value={formData.endereco_cidade_cliente}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Estado</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Estado"
+              name="endereco_estado_cliente"
+              value={formData.endereco_estado_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Telefone</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-telephone"></i></span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Telefone"
+              name="telefone_cliente"
+              value={formData.telefone_cliente}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary w-100 py-2">Cadastrar-se</button>
         </div>
       </form>
     </div>
