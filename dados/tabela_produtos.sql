@@ -5,3 +5,6 @@ CREATE TABLE cafe_mania_db.produtos (
     preco_produto DECIMAL(14, 2) NOT NULL,
     PRIMARY KEY (id_produto)
 );
+
+ALTER TABLE cafe_mania_db.produtos
+ADD COLUMN categoria_produto VARCHAR(255);
