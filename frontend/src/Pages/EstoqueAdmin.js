@@ -4,20 +4,33 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import axios from 'axios';
 
+const Shimmer = () => {
+  return (
+    <div className="shimmer-wrapper">
+      <div className="shimmer-circle"></div>
+    </div>
+  );
+};
+
 const EstoqueAdmin = () => {
   const [produtos, setProdutos] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [novoProduto, setNovoProduto] = useState({ nome_produto: '', preco_produto: '', quantidade_produto: '' });
   const [erro, setErro] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Estado para controlar o botão
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios.get('http://localhost:5000/produtos')
       .then(response => {
         console.log('Produtos carregados:', response.data);
         setProdutos(response.data);
+        setIsLoading(false);
       })
-      .catch(error => console.error('Erro ao buscar produtos:', error));
+      .catch(error => {
+        console.error('Erro ao buscar produtos:', error);
+        setIsLoading(false);
+      });
   }, []);
 
   const handleInputChange = (e) => {
@@ -79,37 +92,45 @@ const EstoqueAdmin = () => {
 
       <div className="center-content">
         <h2>Estoque</h2>
-        <table className="table-admin">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Preço</th>
-              <th>Quantidade</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {produtos.map((produto, index) => (
-              <tr key={index}>
-                <td>{produto.id}</td>
-                <td>{produto.nome}</td>
-                <td>{`R$ ${produto.preco}`}</td> {/* Adiciona "R$ " na frente do preço */}
-                <td>{produto.quantidade}</td>
-                <td>
-                  <button className="btn btn-link p-0" onClick={() => handleDeleteProduto(produto.id)}>
-                    <i className="bi bi-trash"></i>
-                  </button>
-                </td>
+        {isLoading ? (
+          <div className="shimmer-container">
+            <Shimmer />
+          </div>
+        ) : (
+          <table className="table-admin">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {produtos.map((produto, index) => (
+                <tr key={index}>
+                  <td>{produto.id}</td>
+                  <td>{produto.nome}</td>
+                  <td>{`R$ ${produto.preco}`}</td> {/* Adiciona "R$ " na frente do preço */}
+                  <td>{produto.quantidade}</td>
+                  <td>
+                    <button className="btn btn-link p-0" onClick={() => handleDeleteProduto(produto.id)}>
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
-      <div className="d-flex justify-content-center mt-3">
-        <button className="btn btn-primary" onClick={() => setShowForm(true)}>Adicionar Produto</button>
-      </div>
+      {!isLoading && (
+        <div className="d-flex justify-content-center mt-3">
+          <button className="btn btn-primary" onClick={() => setShowForm(true)}>Adicionar Produto</button>
+        </div>
+      )}
 
       {showForm && (
         <div className="mt-3">

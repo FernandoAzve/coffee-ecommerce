@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Styles/CafeStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
@@ -27,7 +26,7 @@ function CafeArabica() {
               <div className="imagem">IMAGEM</div>
               <p>Café 100% Arábica</p>
               <p>R$ 18,79</p>
-              <button>Adicionar ao Carrinho</button>
+              <button className='produtos-button'>Adicionar ao Carrinho</button>
             </div>
           ))}
         </div>
