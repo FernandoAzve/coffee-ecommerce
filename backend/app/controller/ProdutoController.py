@@ -13,8 +13,10 @@ class ProdutoResource(Resource):
         nome_produto = data.get('nome_produto')
         preco_produto = data.get('preco_produto')
         quantidade_produto = data.get('quantidade_produto')
+        categoria_produto = data.get('categoria_produto')
+        imagem_produto = data.get('imagem_produto')
 
-        if not nome_produto or not preco_produto or not quantidade_produto:
+        if not nome_produto or not preco_produto or not quantidade_produto or not categoria_produto or not imagem_produto:
             return {'error': 'Todos os campos são obrigatórios.'}, 400
 
         try:
@@ -25,7 +27,9 @@ class ProdutoResource(Resource):
         novo_produto = Produto(
             nome_produto = nome_produto, 
             preco_produto = preco_produto, 
-            quantidade_produto = quantidade_produto
+            quantidade_produto = quantidade_produto,
+            categoria_produto = categoria_produto,
+            imagem_produto = imagem_produto
         )
         db.session.add(novo_produto)
         db.session.commit()
