@@ -1,0 +1,1 @@
+As tabelas foram criadas utilizando SQL no Amazon RDS. Nesta mesma pasta, é possível encontrar a query utilizada para criar cada tabela.
