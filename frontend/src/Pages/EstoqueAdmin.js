@@ -7,8 +7,9 @@ import axios from 'axios';
 const EstoqueAdmin = () => {
   const [produtos, setProdutos] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [novoProduto, setNovoProduto] = useState({ nome: '', preco: '', quantidade: '' });
+  const [novoProduto, setNovoProduto] = useState({ nome_produto: '', preco_produto: '', quantidade_produto: '' });
   const [erro, setErro] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Estado para controlar o botão
 
   useEffect(() => {
     axios.get('http://localhost:5000/produtos')
@@ -25,24 +26,31 @@ const EstoqueAdmin = () => {
   };
 
   const handleAddProduto = () => {
-    const { nome, preco, quantidade } = novoProduto;
-
-    if (!nome || !preco || !quantidade) {
+    const { nome_produto, preco_produto, quantidade_produto } = novoProduto;
+    if (!nome_produto || !preco_produto || !quantidade_produto) {
       setErro('Todos os campos são obrigatórios.');
       return;
     }
 
-    axios.post('http://localhost:5000/produtos', { nome, preco, quantidade })
+    // Desabilitar o botão para evitar múltiplos cliques
+    setIsButtonDisabled(true);
+
+    axios.post('http://localhost:5000/produtos', { nome_produto, preco_produto, quantidade_produto })
       .then(response => {
         console.log('Produto adicionado:', response.data);
         setProdutos([...produtos, response.data]);
-        setNovoProduto({ nome: '', preco: '', quantidade: '' });
+        setNovoProduto({ nome_produto: '', preco_produto: '', quantidade_produto: '' });
         setErro('');
         setShowForm(false);
       })
       .catch(error => {
         console.error('Erro ao adicionar produto:', error);
         setErro('Erro ao adicionar produto.');
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsButtonDisabled(false);
+        }, 3000);
       });
   };
 
@@ -68,6 +76,7 @@ const EstoqueAdmin = () => {
           <a href="/estoque-admin">Estoque</a>
         </nav>
       </header>
+
       <div className="center-content">
         <h2>Estoque</h2>
         <table className="table-admin">
@@ -85,7 +94,7 @@ const EstoqueAdmin = () => {
               <tr key={index}>
                 <td>{produto.id}</td>
                 <td>{produto.nome}</td>
-                <td>{produto.preco}</td>
+                <td>{`R$ ${produto.preco}`}</td> {/* Adiciona "R$ " na frente do preço */}
                 <td>{produto.quantidade}</td>
                 <td>
                   <button className="btn btn-link p-0" onClick={() => handleDeleteProduto(produto.id)}>
@@ -97,9 +106,11 @@ const EstoqueAdmin = () => {
           </tbody>
         </table>
       </div>
+
       <div className="d-flex justify-content-center mt-3">
         <button className="btn btn-primary" onClick={() => setShowForm(true)}>Adicionar Produto</button>
       </div>
+
       {showForm && (
         <div className="mt-3">
           <h3>Adicionar Novo Produto</h3>
@@ -107,35 +118,19 @@ const EstoqueAdmin = () => {
           <form>
             <div className="form-group">
               <label>Nome</label>
-              <input
-                type="text"
-                className="form-control"
-                name="nome"
-                value={novoProduto.nome}
-                onChange={handleInputChange}
-              />
+              <input type="text" className="form-control" name="nome_produto" value={novoProduto.nome_produto} onChange={handleInputChange} />
             </div>
             <div className="form-group">
               <label>Preço</label>
-              <input
-                type="text"
-                className="form-control"
-                name="preco"
-                value={novoProduto.preco}
-                onChange={handleInputChange}
-              />
+              <input type="text" className="form-control" name="preco_produto" value={novoProduto.preco_produto} onChange={handleInputChange} />
             </div>
             <div className="form-group">
               <label>Quantidade</label>
-              <input
-                type="number"
-                className="form-control"
-                name="quantidade"
-                value={novoProduto.quantidade}
-                onChange={handleInputChange}
-              />
+              <input type="number" className="form-control" name="quantidade_produto" value={novoProduto.quantidade_produto} onChange={handleInputChange} />
             </div>
-            <button type="button" className="btn btn-success mt-2" onClick={handleAddProduto}>Registrar Produto</button>
+            <button type="button" className="btn btn-success mt-2" onClick={handleAddProduto} disabled={isButtonDisabled}>
+              {isButtonDisabled ? 'Aguarde...' : 'Registrar Produto'}
+            </button>
           </form>
         </div>
       )}
