@@ -22,7 +22,10 @@ function Header() {
             <a href="/cadastro">Cadastre-se</a>
           </>
         ) : (
-          <button onClick={logout} className="btn btn-link">Logout</button>
+          <>
+            <a href="/meus-pedidos">Meus Pedidos</a>
+            <button onClick={logout} className='logout-button'>Logout</button>
+          </>
         )}
       </nav>
     </header>

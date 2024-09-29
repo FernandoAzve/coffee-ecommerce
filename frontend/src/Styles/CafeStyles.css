@@ -3,25 +3,6 @@
   padding: 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 10px;
-  color: white;
-}
-
-.logo {
-  font-size: 24px;
-}
-
-.nav a {
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
-}
-
 h1 {
   font-size: 32px;
   margin-bottom: 10px;
@@ -56,14 +37,6 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-button {
-  background-color: #333;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
 }
 
 .center-content {

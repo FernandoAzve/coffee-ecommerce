@@ -1,26 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
 import TopBar from '../Components/TopBar';
 
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    // Lógica de autenticação aqui
-    login();
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email_cliente: email,
+          senha_cliente: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess('Login bem-sucedido!');
+        setError('');
+        localStorage.setItem('token', data.token);
+        login();
+        navigate('/');
+      } else {
+        setError(data.error || 'Erro ao tentar fazer login');
+        setSuccess('');
+      }
+    } catch (err) {
+      setError('Erro ao tentar fazer login');
+      setSuccess('');
+    }
   };
 
   return (
     <div className="home-page">
-
       <TopBar />
-
       <Header />
-
       <h2 className="text-center mb-4 mt-4">Realize o Login</h2>
       <form className="mx-auto" style={{ maxWidth: '400px' }} onSubmit={handleLogin}>
         <div className="mb-3">
@@ -31,6 +63,8 @@ const Login = () => {
               type="email"
               className="form-control"
               placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -43,10 +77,14 @@ const Login = () => {
               type="password"
               className="form-control"
               placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
         <div className="text-center">
           <button type="submit" className="btn btn-primary w-100 py-2">
             Entrar
@@ -55,6 +93,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

@@ -1,7 +1,8 @@
-from flask import request, jsonify
+from flask import request
 from flask_restful import Resource
 from app.model.ClienteModel import Cliente
 from app import db
+import bcrypt
 
 class ClienteResource(Resource):
     def post(self):
@@ -22,7 +23,16 @@ class ClienteResource(Resource):
         if not all([nome_cliente, cpf_cliente, email_cliente, senha_cliente, endereco_logradouro_cliente, endereco_bairro_cliente, endereco_cidade_cliente, endereco_estado_cliente, endereco_numero_cliente, endereco_cep_cliente, telefone_cliente]):
             return {'error': 'Todos os campos são obrigatórios.'}, 400
 
-        senha_hash_cliente = Cliente.hash_senha(senha_cliente)
+        cliente_existente_email = Cliente.query.filter_by(email_cliente=email_cliente).first()
+        cliente_existente_cpf = Cliente.query.filter_by(cpf_cliente=cpf_cliente).first()
+
+        if cliente_existente_email:
+            return {'error': 'Já existe um cadastro com este e-mail.'}, 400
+
+        if cliente_existente_cpf:
+            return {'error': 'Já existe um cadastro com este CPF.'}, 400
+
+        senha_hash_cliente = bcrypt.hashpw(senha_cliente.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         novo_cliente = Cliente(
             nome_cliente = nome_cliente,

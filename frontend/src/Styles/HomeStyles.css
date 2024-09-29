@@ -12,6 +12,16 @@
   color: white;
 }
 
+.logout-button {
+  margin: 0 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo {
   font-size: 24px;
 }
@@ -20,6 +30,9 @@
   margin: 0 10px;
   color: white;
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .banner {
@@ -62,7 +75,7 @@
   align-items: center;
 }
 
-button {
+.produtos-button {
   background-color: #333;
   color: white;
   border: none;
