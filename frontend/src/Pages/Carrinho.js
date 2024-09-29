@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/Carrinho.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Header from '../Components/Header';
+import TopBar from '../Components/TopBar';
 
 function Carrinho() {
   const navigate = useNavigate();
@@ -12,25 +14,11 @@ function Carrinho() {
 
   return (
     <div className="home-page">
-      <div className="top-bar">
-        <a href="/dicas">Dicas</a>
-        <a href="/certificacoes">Certificações</a>
-      </div>
-      <header className="header">
-        <div className="logo">LOGO</div>
-        <nav className="nav">
-          <a href="/">Home</a>
-          <a href="/cursos">Cursos</a>
-          <a href="/arabica">Cafés Arábica</a>
-          <a href="/frutados">Cafés Frutados</a>
-          <a href="/acessorios">Acessórios</a>
-          <a href="/carrinho">
-            <i className="bi bi-cart"></i>
-          </a>
-          <a href="/login">Login</a>
-          <a href="/cadastro">Cadastre-se</a>
-        </nav>
-      </header>
+
+      <TopBar />
+
+      <Header />
+
       <div className="center-content">
         <h2>Carrinho</h2>
         <table className="table">

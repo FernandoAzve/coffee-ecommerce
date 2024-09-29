@@ -2,6 +2,8 @@ import React from 'react';
 import { useAuth } from '../AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Header from '../Components/Header';
+import TopBar from '../Components/TopBar';
 
 const Login = () => {
   const { login } = useAuth();
@@ -14,59 +16,39 @@ const Login = () => {
 
   return (
     <div className="home-page">
-      <div className="top-bar">
-        <a href="/dicas">Dicas</a>
-        <a href="/certificacoes">Certificações</a>
-      </div>
-      <header className="header">
-        <div className="logo">LOGO</div>
-        <nav className="nav">
-          <a href="/">Home</a>
-          <a href="/cursos">Cursos</a>
-          <a href="/arabica">Cafés Arábica</a>
-          <a href="/frutados">Cafés Frutados</a>
-          <a href="/acessorios">Acessórios</a>
-          <a href="/carrinho">
-            <i className="bi bi-cart"></i>
-          </a>
-          <a href="/login">Login</a>
-          <a href="/cadastro">Cadastre-se</a>
-        </nav>
-      </header>
-      <h2 className="center-content">Realize o Login</h2>
-      <form style={{ maxWidth: '300px', margin: '0 auto' }}>
-        <div style={{ marginBottom: '20px' }}>
-          <input
-            type="email"
-            placeholder="e-mail"
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '5px'
-            }}
-          />
-          <input
-            type="password"
-            placeholder="senha"
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '5px'
-            }}
-          />
+
+      <TopBar />
+
+      <Header />
+
+      <h2 className="text-center mb-4 mt-4">Realize o Login</h2>
+      <form className="mx-auto" style={{ maxWidth: '400px' }} onSubmit={handleLogin}>
+        <div className="mb-3">
+          <label className="form-label">E-mail</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-envelope"></i></span>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="E-mail"
+              required
+            />
+          </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <button
-            type="submit"
-            style={{
-              padding: '10px 20px',
-              borderRadius: '5px',
-              backgroundColor: '#333',
-              color: '#fff',
-              cursor: 'pointer'
-            }}
-          >
+        <div className="mb-3">
+          <label className="form-label">Senha</label>
+          <div className="input-group">
+            <span className="input-group-text"><i className="bi bi-lock"></i></span>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Senha"
+              required
+            />
+          </div>
+        </div>
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary w-100 py-2">
             Entrar
           </button>
         </div>

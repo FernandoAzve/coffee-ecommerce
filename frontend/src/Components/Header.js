@@ -1,10 +1,8 @@
 import React from 'react';
 import { useAuth } from '../AuthContext';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const Header = () => {
-  const { isAuthenticated } = useAuth();
+function Header() {
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <header className="header">
@@ -18,15 +16,17 @@ const Header = () => {
         <a href="/carrinho">
           <i className="bi bi-cart"></i>
         </a>
-        <a href="/login">Login</a>
-        {isAuthenticated ? (
-          <a href="/meus-pedidos">Meus pedidos</a>
+        {!isAuthenticated ? (
+          <>
+            <a href="/login">Login</a>
+            <a href="/cadastro">Cadastre-se</a>
+          </>
         ) : (
-          <a href="/cadastro">Cadastre-se</a>
+          <button onClick={logout} className="btn btn-link">Logout</button>
         )}
       </nav>
     </header>
   );
-};
+}
 
 export default Header;

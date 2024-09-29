@@ -2,29 +2,16 @@ import React from 'react';
 import '../Styles/CafeStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Header from '../Components/Header';
+import TopBar from '../Components/TopBar';
 
 function CafeFrutados() {
   return (
     <div className="cafe-page">
-      <div className="top-bar">
-        <a href="/dicas">Dicas</a>
-        <a href="/certificacoes">Certificações</a>
-      </div>
-      <header className="header">
-        <div className="logo">LOGO</div>
-        <nav className="nav">
-          <a href="/">Home</a>
-          <a href="/cursos">Cursos</a>
-          <a href="/arabica">Cafés Arábica</a>
-          <a href="/frutados">Cafés Frutados</a>
-          <a href="/acessorios">Acessórios</a>
-          <a href="/carrinho">
-            <i className="bi bi-cart"></i>
-          </a>
-          <a href="/login">Login</a>
-          <a href="/cadastro">Cadastre-se</a>
-        </nav>
-      </header>
+
+      <TopBar />
+
+      <Header />
 
       <div className="center-content">
         <h1>Cafés Frutados</h1>

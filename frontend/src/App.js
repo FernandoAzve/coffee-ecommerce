@@ -13,7 +13,6 @@ import Dicas from './Pages/Dicas'
 import Carrinho from './Pages/Carrinho';
 import FinalizarPedido from './Pages/FinalizarPedido';
 import MeusPedidos from './Pages/MeusPedidos';
-import Header from './Components/Header';
 import LoginAdmin from './Pages/LoginAdmin';
 import UsuariosAdmin from './Pages/UsuariosAdmin';
 import PedidosAdmin from './Pages/PedidosAdmin';

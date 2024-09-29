@@ -13,15 +13,15 @@ def create_app():
     CORS(app)
     api = Api(app)
 
-    # Configuração do banco de dados
     app.config.from_object('config.Config')
 
-    # Inicializar o SQLAlchemy
     db.init_app(app)
 
-    # Registrar as rotas dos recursos
-    from app.resources.produto import ProdutoResource, ProdutoByIdResource
+    from app.controller.ProdutoController import ProdutoResource, ProdutoByIdResource
+    from app.controller.ClienteController import ClienteResource
+
     api.add_resource(ProdutoResource, '/produtos')
     api.add_resource(ProdutoByIdResource, '/produtos/<int:id>')
+    api.add_resource(ClienteResource, '/clientes')
 
     return app
