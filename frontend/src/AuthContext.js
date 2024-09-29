@@ -1,12 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Criação do contexto de autenticação
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Verifica o localStorage ao carregar a página
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -14,15 +12,13 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  // Função de login
   const login = (token) => {
-    localStorage.setItem('token', token); // Armazena o token no localStorage
+    localStorage.setItem('token', token);
     setIsAuthenticated(true);
   };
 
-  // Função de logout
   const logout = () => {
-    localStorage.removeItem('token'); // Remove o token do localStorage
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
   };
 
@@ -33,7 +29,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Hook para usar o contexto de autenticação
 export function useAuth() {
   return useContext(AuthContext);
 }
