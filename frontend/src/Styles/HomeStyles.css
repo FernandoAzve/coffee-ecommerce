@@ -67,12 +67,15 @@
 }
 
 .imagem {
-  background-color: #eee;
-  height: 150px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .produtos-button {

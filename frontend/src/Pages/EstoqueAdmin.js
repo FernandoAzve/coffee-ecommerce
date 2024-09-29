@@ -15,9 +15,15 @@ const Shimmer = () => {
 const EstoqueAdmin = () => {
   const [produtos, setProdutos] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [novoProduto, setNovoProduto] = useState({ nome_produto: '', preco_produto: '', quantidade_produto: '' });
+  const [novoProduto, setNovoProduto] = useState({
+    nome_produto: '',
+    preco_produto: '',
+    quantidade_produto: '',
+    categoria_produto: '',
+    imagem_produto: ''
+  });
   const [erro, setErro] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Estado para controlar o botão
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -39,20 +45,19 @@ const EstoqueAdmin = () => {
   };
 
   const handleAddProduto = () => {
-    const { nome_produto, preco_produto, quantidade_produto } = novoProduto;
-    if (!nome_produto || !preco_produto || !quantidade_produto) {
+    const { nome_produto, preco_produto, quantidade_produto, categoria_produto, imagem_produto } = novoProduto;
+    if (!nome_produto || !preco_produto || !quantidade_produto || !categoria_produto || !imagem_produto) {
       setErro('Todos os campos são obrigatórios.');
       return;
     }
 
-    // Desabilitar o botão para evitar múltiplos cliques
     setIsButtonDisabled(true);
 
-    axios.post('http://localhost:5000/produtos', { nome_produto, preco_produto, quantidade_produto })
+    axios.post('http://localhost:5000/produtos', { nome_produto, preco_produto, quantidade_produto, categoria_produto, imagem_produto })
       .then(response => {
         console.log('Produto adicionado:', response.data);
         setProdutos([...produtos, response.data]);
-        setNovoProduto({ nome_produto: '', preco_produto: '', quantidade_produto: '' });
+        setNovoProduto({ nome_produto: '', preco_produto: '', quantidade_produto: '', categoria_produto: '', imagem_produto: '' });
         setErro('');
         setShowForm(false);
       })
@@ -104,6 +109,8 @@ const EstoqueAdmin = () => {
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>Quantidade</th>
+                <th>Categoria</th>
+                <th>Imagem</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -112,8 +119,10 @@ const EstoqueAdmin = () => {
                 <tr key={index}>
                   <td>{produto.id}</td>
                   <td>{produto.nome}</td>
-                  <td>{`R$ ${produto.preco}`}</td> {/* Adiciona "R$ " na frente do preço */}
+                  <td>{`R$ ${produto.preco}`}</td>
                   <td>{produto.quantidade}</td>
+                  <td>{produto.categoria}</td>
+                  <td>{produto.imagem}</td>
                   <td>
                     <button className="btn btn-link p-0" onClick={() => handleDeleteProduto(produto.id)}>
                       <i className="bi bi-trash"></i>
@@ -139,17 +148,64 @@ const EstoqueAdmin = () => {
           <form>
             <div className="form-group">
               <label>Nome</label>
-              <input type="text" className="form-control" name="nome_produto" value={novoProduto.nome_produto} onChange={handleInputChange} />
+              <input
+                type="text"
+                className="form-control"
+                name="nome_produto"
+                value={novoProduto.nome_produto}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="form-group">
               <label>Preço</label>
-              <input type="text" className="form-control" name="preco_produto" value={novoProduto.preco_produto} onChange={handleInputChange} />
+              <input
+                type="text"
+                className="form-control"
+                name="preco_produto"
+                value={novoProduto.preco_produto}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="form-group">
               <label>Quantidade</label>
-              <input type="number" className="form-control" name="quantidade_produto" value={novoProduto.quantidade_produto} onChange={handleInputChange} />
+              <input
+                type="number"
+                className="form-control"
+                name="quantidade_produto"
+                value={novoProduto.quantidade_produto}
+                onChange={handleInputChange}
+              />
             </div>
-            <button type="button" className="btn btn-success mt-2" onClick={handleAddProduto} disabled={isButtonDisabled}>
+            <div className="form-group">
+              <label>Categoria</label>
+              <select
+                className="form-control"
+                name="categoria_produto"
+                value={novoProduto.categoria_produto}
+                onChange={handleInputChange}
+              >
+                <option value="">Selecione uma categoria</option>
+                <option value="Café Arábica">Café Arábica</option>
+                <option value="Café Frutado">Café Frutado</option>
+                <option value="Acessórios">Acessórios</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Imagem</label>
+              <input
+                type="text"
+                className="form-control"
+                name="imagem_produto"
+                value={novoProduto.imagem_produto}
+                onChange={handleInputChange}
+              />
+            </div>
+            <button
+              type="button"
+              className="btn btn-success mt-2"
+              onClick={handleAddProduto}
+              disabled={isButtonDisabled}
+            >
               {isButtonDisabled ? 'Aguarde...' : 'Registrar Produto'}
             </button>
           </form>

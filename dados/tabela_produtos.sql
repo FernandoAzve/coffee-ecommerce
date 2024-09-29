@@ -8,3 +8,6 @@ CREATE TABLE cafe_mania_db.produtos (
 
 ALTER TABLE cafe_mania_db.produtos
 ADD COLUMN categoria_produto VARCHAR(255);
+
+ALTER TABLE cafe_mania_db.produtos
+ADD COLUMN imagem_produto VARCHAR(255);
