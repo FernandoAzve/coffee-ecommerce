@@ -27,7 +27,7 @@ function Acessorios() {
               <div className="imagem">IMAGEM</div>
               <p>Cafeteira</p>
               <p>R$ 499,95</p>
-              <button>Adicionar ao Carrinho</button>
+              <button className='produtos-button'>Adicionar ao Carrinho</button>
             </div>
           ))}
         </div>
