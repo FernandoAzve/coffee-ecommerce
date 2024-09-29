@@ -3,16 +3,16 @@
   padding: 20px;
 }
 
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #333;
   padding: 10px;
   color: white;
-}
+} */
 
-.logo {
+/* .logo {
   font-size: 24px;
 }
 
@@ -20,7 +20,7 @@
   margin: 0 10px;
   color: white;
   text-decoration: none;
-}
+} */
 
 h1 {
   font-size: 32px;
@@ -58,13 +58,13 @@ h1 {
   align-items: center;
 }
 
-button {
+/* button {
   background-color: #333;
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
-}
+} */
 
 .center-content {
   text-align: center;

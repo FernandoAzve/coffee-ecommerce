@@ -22,6 +22,8 @@ function Cadastro() {
     telefone_cliente: ''
   });
 
+  const [errorMessage, setErrorMessage] = useState(''); // Estado para armazenar a mensagem de erro
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -29,8 +31,10 @@ function Cadastro() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); // Limpa a mensagem de erro antes de enviar os dados
+
     try {
-      const response = await fetch('http://localhost:5000/clientes', {
+      const response = await fetch('http://localhost:5000/cadastro', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,28 +44,29 @@ function Cadastro() {
 
       if (response.ok) {
         const data = await response.json();
-        alert('Cadastro realizado com sucesso!');
+        alert('Cadastro realizado com sucesso!\nFaça login para continuar.');
         console.log('Resposta do backend:', data);
-        navigate('/');
+        navigate('/login');
       } else {
-        alert('Erro ao realizar o cadastro.');
+        const errorData = await response.json(); // Captura a resposta de erro do backend
+        setErrorMessage(errorData.error || 'Erro ao realizar o cadastro.'); // Define a mensagem de erro
       }
     } catch (error) {
       console.error('Erro ao enviar os dados:', error);
-      alert('Erro ao conectar com o servidor.');
+      setErrorMessage('Erro ao conectar com o servidor.');
     }
   };
 
   return (
     <div className="home-page">
-
       <TopBar />
-
       <Header />
-
       <h2 className="text-center mb-4 mt-4">Realize o Cadastro</h2>
 
       <form className="mx-auto" style={{ maxWidth: '500px' }} onSubmit={handleSubmit}>
+        {/* Exibe a mensagem de erro, se houver */}
+        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+
         <div className="mb-3">
           <label className="form-label">Nome Completo</label>
           <div className="input-group">
