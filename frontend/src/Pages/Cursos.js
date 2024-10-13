@@ -28,7 +28,7 @@ function Cursos() {
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/SEU_VIDEO_ID"
+            src="https://www.youtube.com/embed/h5KB_N6J3rI"
             title="Introdução ao Barismo"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -44,7 +44,7 @@ function Cursos() {
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/SEU_VIDEO_ID"
+            src="https://www.youtube.com/embed/oCOUSopZLWg"
             title="Técnicas Avançadas de Barismo"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -60,7 +60,7 @@ function Cursos() {
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/SEU_VIDEO_ID"
+            src="https://www.youtube.com/embed/sWD7pBJl5Go"
             title="Latte Art"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

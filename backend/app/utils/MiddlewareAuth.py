@@ -6,8 +6,6 @@ from flask import request, jsonify
 JWT_SECRET = os.getenv('JWT_SECRET')
 JWT_ALGORITHM = os.getenv('JWT_ALGORITHM')
 
-os.getenv('SQLALCHEMY_DATABASE_URI')
-
 def authenticate_token(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
