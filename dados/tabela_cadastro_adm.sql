@@ -1,4 +1,4 @@
-CREATE TABLE cafe_mania_db.adm (
+CREATE TABLE cafe_mania_db.cadastro_adm (
     id_adm INT NOT NULL AUTO_INCREMENT,
     nome_adm VARCHAR(100) NOT NULL,
     email_adm VARCHAR(256) NOT NULL,
