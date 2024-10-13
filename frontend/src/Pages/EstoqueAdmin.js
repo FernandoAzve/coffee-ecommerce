@@ -92,6 +92,7 @@ const EstoqueAdmin = () => {
           <a href="/usuarios-admin">Usuários</a>
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
+          <a href="/acesso-privilegiado">Acesso Privilegiado</a>
         </nav>
       </header>
 

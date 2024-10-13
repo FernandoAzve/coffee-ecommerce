@@ -1,7 +1,7 @@
 from app import db
 
 class Cliente(db.Model):
-    __tablename__ = 'clientes'
+    __tablename__ = 'cadastro_clientes'
 
     id_cliente = db.Column(db.Integer, primary_key=True)
     nome_cliente = db.Column(db.String(100), nullable=False)

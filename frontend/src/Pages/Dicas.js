@@ -22,12 +22,12 @@ function Dicas() {
 
       <div className="videos-container">
         <div className="videos">
-          <h2>Tutorial de como moer o café</h2>
+          <h2>Como moer o café</h2>
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/SEU_VIDEO_ID"
-            title="Tutorial de como moer o café"
+            src="https://www.youtube.com/embed/ZwV0flZT-YU"
+            title="Como moer o café"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -36,12 +36,12 @@ function Dicas() {
       </div>
       <div className="videos-container">
         <div className="videos">
-          <h2>Tutorial de como moer o café</h2>
+          <h2>Como fazer café na prensa francesa</h2>
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/SEU_VIDEO_ID"
-            title="Tutorial de como moer o café"
+            src="https://www.youtube.com/embed/mCspTWZqOsY"
+            title="Como fazer café na prensa francesa"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

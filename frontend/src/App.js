@@ -8,8 +8,8 @@ import Acessorios from './Pages/Acessorios';
 import Cursos from './Pages/Cursos';
 import Login from './Pages/Login';
 import Cadastro from './Pages/Cadastro';
-import Certificacoes from './Pages/Certificacoes'
-import Dicas from './Pages/Dicas'
+import Certificacoes from './Pages/Certificacoes';
+import Dicas from './Pages/Dicas';
 import Carrinho from './Pages/Carrinho';
 import FinalizarPedido from './Pages/FinalizarPedido';
 import MeusPedidos from './Pages/MeusPedidos';
@@ -17,6 +17,7 @@ import LoginAdmin from './Pages/LoginAdmin';
 import UsuariosAdmin from './Pages/UsuariosAdmin';
 import PedidosAdmin from './Pages/PedidosAdmin';
 import EstoquetoAdmin from './Pages/EstoqueAdmin';
+import AcessoPrivilegiado from './Pages/AcessoPrivilegiado';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/usuarios-admin" element={<UsuariosAdmin />} />
           <Route path="/pedidos-admin" element={<PedidosAdmin />} />
           <Route path="/estoque-admin" element={<EstoquetoAdmin />} />
+          <Route path="/acesso-privilegiado" element={<AcessoPrivilegiado />} />
         </Routes>
       </Router>
     </AuthProvider>
