@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useAuth } from '../AuthContext'; // Importa o contexto de autenticação
+import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
 
 function LoginAdmin() {
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ function LoginAdmin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { loginAdmin } = useAuth(); // Usa a função de login do admin do contexto
+  const { loginAdmin } = useAdminAuth(); // Usa a função de login do admin do contexto
 
   const handleSubmit = async (e) => {
     e.preventDefault();

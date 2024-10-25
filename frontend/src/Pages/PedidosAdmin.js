@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
-import { useAuth } from '../AuthContext'; // Importa o contexto de autenticação
+import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function PedidosAdmin() {
-  const { isAdminAuthenticated } = useAuth(); // Verifica se o admin está autenticado
+  const { isAdminAuthenticated, loading, logoutAdmin } = useAdminAuth(); // Verifica se o admin está autenticado e o estado de carregamento
   const navigate = useNavigate(); // Hook para redirecionamento
-  const [loading, setLoading] = useState(true); // Estado de carregamento
 
   useEffect(() => {
     console.log('isAdminAuthenticated:', isAdminAuthenticated); // Adicione este log para depuração
     // Se o admin não estiver autenticado, redireciona para a página de login
-    if (!isAdminAuthenticated) {
+    if (!isAdminAuthenticated && !loading) {
       navigate('/login-admin');
-    } else {
-      setLoading(false); // Desativa o carregamento quando autenticado
     }
-  }, [isAdminAuthenticated, navigate]);
+  }, [isAdminAuthenticated, loading, navigate]);
 
   // Exibe um spinner de carregamento enquanto verifica a autenticação
   if (loading) {
@@ -35,6 +32,7 @@ function PedidosAdmin() {
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
           <a href="/acesso-privilegiado">Acesso Privilegiado</a>
+          <button onClick={logoutAdmin}>Logout</button> {/* Botão de logout */}
         </nav>
       </header>
       <div className="center-content">

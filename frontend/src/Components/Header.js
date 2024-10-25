@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAuth } from '../AuthContext';
+import { useUserAuth } from '../UserAuthContext';
 
 function Header() {
-  const { isAuthenticated, logoutUser } = useAuth();
+  const { isAuthenticated, logoutUser } = useUserAuth();
 
   return (
     <header className="header">

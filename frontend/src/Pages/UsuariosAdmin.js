@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
-import { useAuth } from '../AuthContext'; // Importa o contexto de autenticação
+import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -17,10 +17,10 @@ function UsuariosAdmin() {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate(); // Hook para redirecionamento
-  const { isAdminAuthenticated, logoutAdmin } = useAuth(); // Verifica se o admin está autenticado e obtém a função de logout
+  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth(); // Verifica se o admin está autenticado e obtém a função de logout
 
   // Função para buscar clientes
-  const fetchClientes = async () => {
+  const fetchClientes = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken'); // Obtém o token do localStorage
       const response = await fetch('http://localhost:5000/clientes', {
@@ -38,46 +38,26 @@ function UsuariosAdmin() {
       }
     } catch (error) {
       console.error('Erro ao buscar clientes:', error);
-      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [logoutAdmin, navigate]);
 
-  // Função para deletar cliente
-  const handleDeleteCliente = async (id) => {
-    try {
-      const token = localStorage.getItem('adminToken'); // Obtém o token do localStorage
-      const response = await fetch(`http://localhost:5000/clientes/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`, // Envia o token no cabeçalho
-        },
-      });
-      if (response.ok) {
-        setClientes(clientes.filter((cliente) => cliente.id !== id));
-        alert('Cliente removido com sucesso.');
-      } else {
-        alert('Erro ao remover o cliente.');
-      }
-    } catch (error) {
-      console.error('Erro ao remover cliente:', error);
-      alert('Erro ao conectar com o servidor.');
-    }
-  };
-
-  // useEffect para validar o token e buscar clientes ao carregar o componente
   useEffect(() => {
     if (!isAdminAuthenticated) {
-      // Se o admin não estiver autenticado, redireciona para a página de login
-      navigate('/login-admin');
+      navigate('/login-admin'); // Redireciona para a página de login se não estiver autenticado
     } else {
-      fetchClientes(); // Busca clientes se autenticado
+      fetchClientes(); // Busca os clientes quando o admin está autenticado
     }
-  }, [isAdminAuthenticated, navigate]);
+  }, [isAdminAuthenticated, fetchClientes, navigate]);
+
+  // Exibe o shimmer enquanto os dados estão sendo carregados
+  if (isLoading) {
+    return <Shimmer />;
+  }
 
   return (
-    <div className="home-page">
+    <div className="admin-page">
       <header className="header">
         <div className="logo">LOGO</div>
         <nav className="nav">
@@ -85,58 +65,33 @@ function UsuariosAdmin() {
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
           <a href="/acesso-privilegiado">Acesso Privilegiado</a>
+          <button onClick={logoutAdmin}>Logout</button> {/* Botão de logout */}
         </nav>
       </header>
       <div className="center-content">
         <h2>Usuários</h2>
-        {isLoading ? (
-          <div className="shimmer-container">
-            <Shimmer />
-          </div>
-        ) : (
-          <table className="table-admin">
-            <thead>
-              <tr>
-                <th>ID Usuário</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>E-mail</th>
-                <th>Logradouro</th>
-                <th>Número</th>
-                <th>Complemento</th>
-                <th>CEP</th>
-                <th>Bairro</th>
-                <th>Cidade</th>
-                <th>Estado</th>
-                <th>Telefone</th>
-                <th>Remover</th>
+        <table className="table-admin">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {clientes.map((cliente) => (
+              <tr key={cliente.id}>
+                <td>{cliente.id}</td>
+                <td>{cliente.nome}</td>
+                <td>{cliente.email}</td>
+                <td>
+                  {/* Adicione ações aqui, se necessário */}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {clientes.map((cliente, index) => (
-                <tr key={index}>
-                  <td title={cliente.id}>{cliente.id}</td>
-                  <td title={cliente.nome}>{cliente.nome}</td>
-                  <td title={cliente.cpf}>{cliente.cpf}</td>
-                  <td title={cliente.email}>{cliente.email}</td>
-                  <td title={cliente.endereco.logradouro}>{cliente.endereco.logradouro}</td>
-                  <td title={cliente.endereco.numero}>{cliente.endereco.numero}</td>
-                  <td title={cliente.endereco.complemento}>{cliente.endereco.complemento}</td>
-                  <td title={cliente.endereco.cep}>{cliente.endereco.cep}</td>
-                  <td title={cliente.endereco.bairro}>{cliente.endereco.bairro}</td>
-                  <td title={cliente.endereco.cidade}>{cliente.endereco.cidade}</td>
-                  <td title={cliente.endereco.estado}>{cliente.endereco.estado}</td>
-                  <td title={cliente.telefone}>{cliente.telefone}</td>
-                  <td>
-                    <button className="btn btn-link p-0" onClick={() => handleDeleteCliente(cliente.id)}>
-                      <i className="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

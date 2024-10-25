@@ -4,13 +4,13 @@ import '../Styles/Admin.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import axios from 'axios';
-import { useAuth } from '../AuthContext'; // Importa o contexto de autenticação
+import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
 
 const EstoqueAdmin = () => {
   const [produtos, setProdutos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { isAdminAuthenticated } = useAuth(); // Usa o estado de autenticação do admin
+  const { isAdminAuthenticated } = useAdminAuth(); // Usa o estado de autenticação do admin
 
   // Verifica se o admin está autenticado
   useEffect(() => {

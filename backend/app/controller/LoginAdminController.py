@@ -34,9 +34,9 @@ class AdminLoginController(Resource):
             payload = {
                 'user_id': admin.id_adm,
                 'role': 'admin',
-                'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=JWT_EXP_DELTA_SECONDS)
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=JWT_EXP_DELTA_SECONDS)
             }
-            token = jwt.encode(payload, JWT_SECRET, JWT_ALGORITHM)
+            token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
             return {
                 'message': 'Login bem-sucedido',

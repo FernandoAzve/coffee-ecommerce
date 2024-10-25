@@ -14,7 +14,8 @@ def authenticate_token(f):
             return jsonify({'error': 'Token ausente'}), 401
         
         try:
-            payload = jwt.decode(token.split(" ")[1], JWT_SECRET, algorithms=[JWT_ALGORITHM])
+            token = token.split(" ")[1]  # Remove o prefixo "Bearer"
+            payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
             request.user_id = payload['user_id']
         except jwt.ExpiredSignatureError:
             return jsonify({'error': 'Token expirado'}), 401

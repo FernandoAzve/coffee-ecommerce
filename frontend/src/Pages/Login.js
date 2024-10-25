@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext';
+import { useUserAuth } from '../UserAuthContext';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -8,7 +8,7 @@ import TopBar from '../Components/TopBar';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { loginUser } = useAuth();
+  const { loginUser } = useUserAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
