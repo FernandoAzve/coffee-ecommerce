@@ -6,38 +6,43 @@ from flask import request
 from flask_restful import Resource
 from app.model.AdminModel import Admin
 
-JWT_SECRET = os.getenv('JWT_SECRET')
-JWT_ALGORITHM = os.getenv('JWT_ALGORITHM')
-JWT_EXP_DELTA_SECONDS = int(os.getenv('JWT_EXP_DELTA_SECONDS'))
+# Certifique-se de que as variáveis de ambiente estão configuradas corretamente
+JWT_SECRET = os.getenv('JWT_SECRET', 'your_jwt_secret')
+JWT_ALGORITHM = os.getenv('JWT_ALGORITHM', 'HS256')
+JWT_EXP_DELTA_SECONDS = int(os.getenv('JWT_EXP_DELTA_SECONDS', 3600))
 
 class AdminLoginController(Resource):
     def post(self):
-        data = request.json
-        email_admin = data.get('email_admin')
-        senha_admin = data.get('senha_admin')
+        try:
+            data = request.json
+            email_adm = data.get('email_adm')
+            senha_adm = data.get('senha_adm')
 
-        if not email_admin or not senha_admin:
-            return {'error': 'E-mail e senha são obrigatórios.'}, 400
+            if not email_adm or not senha_adm:
+                return {'error': 'E-mail e senha são obrigatórios.'}, 400
 
-        # Busca o administrador no banco de dados
-        admin = Admin.query.filter_by(email_admin=email_admin).first()
-        if not admin:
-            return {'error': 'E-mail ou senha incorretos.'}, 400
+            # Busca o administrador no banco de dados
+            admin = Admin.query.filter_by(email_adm=email_adm).first()
+            if not admin:
+                return {'error': 'E-mail ou senha incorretos.'}, 400
 
-        # Verifica a senha
-        if not bcrypt.checkpw(senha_admin.encode('utf-8'), admin.senha_hash_admin.encode('utf-8')):
-            return {'error': 'E-mail ou senha incorretos.'}, 400
+            # Verifica a senha
+            if not bcrypt.checkpw(senha_adm.encode('utf-8'), admin.senha_hash_adm.encode('utf-8')):
+                return {'error': 'E-mail ou senha incorretos.'}, 400
 
-        # Gera o token JWT
-        payload = {
-            'user_id': admin.id_admin,
-            'role': 'admin',
-            'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=JWT_EXP_DELTA_SECONDS)
-        }
-        token = jwt.encode(payload, JWT_SECRET, JWT_ALGORITHM)
+            # Gera o token JWT
+            payload = {
+                'user_id': admin.id_adm,
+                'role': 'admin',
+                'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=JWT_EXP_DELTA_SECONDS)
+            }
+            token = jwt.encode(payload, JWT_SECRET, JWT_ALGORITHM)
 
-        return {
-            'message': 'Login bem-sucedido',
-            'token': token,
-            'admin': admin.to_dict()
-        }, 200
+            return {
+                'message': 'Login bem-sucedido',
+                'token': token,
+                'admin': admin.to_dict()  # Certifique-se de que o método to_dict() existe no modelo Admin
+            }, 200
+
+        except Exception as e:
+            return {'error': str(e)}, 500

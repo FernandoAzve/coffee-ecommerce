@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../AuthContext';
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logoutUser } = useAuth();
 
   return (
     <header className="header">
@@ -24,7 +24,7 @@ function Header() {
         ) : (
           <>
             <a href="/meus-pedidos">Meus Pedidos</a>
-            <button onClick={logout} className='logout-button'>Logout</button>
+            <button onClick={logoutUser} className='logout-button'>Logout</button>
           </>
         )}
       </nav>

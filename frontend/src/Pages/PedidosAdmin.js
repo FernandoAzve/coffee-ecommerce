@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
+import { useAuth } from '../AuthContext'; // Importa o contexto de autenticação
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function PedidosAdmin() {
+  const { isAdminAuthenticated } = useAuth(); // Verifica se o admin está autenticado
+  const navigate = useNavigate(); // Hook para redirecionamento
+  const [loading, setLoading] = useState(true); // Estado de carregamento
+
+  useEffect(() => {
+    console.log('isAdminAuthenticated:', isAdminAuthenticated); // Adicione este log para depuração
+    // Se o admin não estiver autenticado, redireciona para a página de login
+    if (!isAdminAuthenticated) {
+      navigate('/login-admin');
+    } else {
+      setLoading(false); // Desativa o carregamento quando autenticado
+    }
+  }, [isAdminAuthenticated, navigate]);
+
+  // Exibe um spinner de carregamento enquanto verifica a autenticação
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <div className="home-page">
       <header className="header">
@@ -57,64 +78,11 @@ function PedidosAdmin() {
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>#432</td>
-              <td>#001</td>
-              <td>1x Café Arábica, 2x Café Frutados, 1x Cafeteira</td>
-              <td>R$ 601,00</td>
-              <td>Rua Joao Maria, 10, Bairro, Itaquaquecetuba, 01234-560, Rua sem saída</td>
-              <td>
-                <div className="dropdown">
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton2"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Processando
-                  </button>
-                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <button className="dropdown-item" type="button">Pendente</button>
-                    <button className="dropdown-item" type="button">Processando</button>
-                    <button className="dropdown-item" type="button">Enviado</button>
-                    <button className="dropdown-item" type="button">Entregue</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>#432</td>
-              <td>#001</td>
-              <td>1x Café Arábica, 2x Café Frutados, 1x Cafeteira</td>
-              <td>R$ 601,00</td>
-              <td>Rua Joao Maria, 10, Bairro, Itaquaquecetuba, 01234-560, Rua sem saída</td>
-              <td>
-                <div className="dropdown">
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton2"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Processando
-                  </button>
-                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <button className="dropdown-item" type="button">Pendente</button>
-                    <button className="dropdown-item" type="button">Processando</button>
-                    <button className="dropdown-item" type="button">Enviado</button>
-                    <button className="dropdown-item" type="button">Entregue</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
+            {/* Outros pedidos podem ser mapeados aqui */}
           </tbody>
         </table>
       </div>
-    </div >
+    </div>
   );
 }
 

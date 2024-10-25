@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
+import { useAuth } from '../AuthContext'; // Importa o contexto de autenticação
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -14,26 +16,46 @@ const Shimmer = () => {
 function UsuariosAdmin() {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); // Hook para redirecionamento
+  const { isAdminAuthenticated, logoutAdmin } = useAuth(); // Verifica se o admin está autenticado e obtém a função de logout
 
+  // Função para buscar clientes
   const fetchClientes = async () => {
     try {
-      const response = await fetch('http://localhost:5000/clientes');
-      const data = await response.json();
-      setClientes(data);
-      setIsLoading(false);
+      const token = localStorage.getItem('adminToken'); // Obtém o token do localStorage
+      const response = await fetch('http://localhost:5000/clientes', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Envia o token no cabeçalho
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setClientes(data);
+      } else {
+        // Redireciona para login caso o token seja inválido ou expirado
+        logoutAdmin();
+        navigate('/login-admin');
+      }
     } catch (error) {
       console.error('Erro ao buscar clientes:', error);
+      setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };
 
+  // Função para deletar cliente
   const handleDeleteCliente = async (id) => {
     try {
+      const token = localStorage.getItem('adminToken'); // Obtém o token do localStorage
       const response = await fetch(`http://localhost:5000/clientes/${id}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`, // Envia o token no cabeçalho
+        },
       });
       if (response.ok) {
-        setClientes(clientes.filter(cliente => cliente.id !== id));
+        setClientes(clientes.filter((cliente) => cliente.id !== id));
         alert('Cliente removido com sucesso.');
       } else {
         alert('Erro ao remover o cliente.');
@@ -44,9 +66,15 @@ function UsuariosAdmin() {
     }
   };
 
+  // useEffect para validar o token e buscar clientes ao carregar o componente
   useEffect(() => {
-    fetchClientes();
-  }, []);
+    if (!isAdminAuthenticated) {
+      // Se o admin não estiver autenticado, redireciona para a página de login
+      navigate('/login-admin');
+    } else {
+      fetchClientes(); // Busca clientes se autenticado
+    }
+  }, [isAdminAuthenticated, navigate]);
 
   return (
     <div className="home-page">

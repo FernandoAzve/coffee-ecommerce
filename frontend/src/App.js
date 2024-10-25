@@ -16,8 +16,9 @@ import MeusPedidos from './Pages/MeusPedidos';
 import LoginAdmin from './Pages/LoginAdmin';
 import UsuariosAdmin from './Pages/UsuariosAdmin';
 import PedidosAdmin from './Pages/PedidosAdmin';
-import EstoquetoAdmin from './Pages/EstoqueAdmin';
+import EstoqueAdmin from './Pages/EstoqueAdmin';
 import AcessoPrivilegiado from './Pages/AcessoPrivilegiado';
+import ProtectedRoute from './ProtectedRoute'; // Importa o componente de rota protegida
 
 function App() {
   return (
@@ -37,10 +38,10 @@ function App() {
           <Route path="/finalizar-pedido" element={<FinalizarPedido />} />
           <Route path="/meus-pedidos" element={<MeusPedidos />} />
           <Route path="/login-admin" element={<LoginAdmin />} />
-          <Route path="/usuarios-admin" element={<UsuariosAdmin />} />
-          <Route path="/pedidos-admin" element={<PedidosAdmin />} />
-          <Route path="/estoque-admin" element={<EstoquetoAdmin />} />
-          <Route path="/acesso-privilegiado" element={<AcessoPrivilegiado />} />
+          <Route path="/usuarios-admin" element={<ProtectedRoute><UsuariosAdmin /></ProtectedRoute>} />
+          <Route path="/pedidos-admin" element={<ProtectedRoute><PedidosAdmin /></ProtectedRoute>} />
+          <Route path="/estoque-admin" element={<ProtectedRoute><EstoqueAdmin /></ProtectedRoute>} />
+          <Route path="/acesso-privilegiado" element={<ProtectedRoute><AcessoPrivilegiado /></ProtectedRoute>} />
         </Routes>
       </Router>
     </AuthProvider>
