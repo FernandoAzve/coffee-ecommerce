@@ -7,11 +7,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
+const Shimmer = () => {
+  return (
+    <div className="shimmer-wrapper">
+      <div className="shimmer-circle"></div>
+    </div>
+  );
+};
+
 function PedidosAdmin() {
   const { isAdminAuthenticated, loading, logoutAdmin } = useAdminAuth();
   const navigate = useNavigate();
   const [pedidos, setPedidos] = useState([]);
   const [statusOptions, setStatusOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
 
   useEffect(() => {
     if (!isAdminAuthenticated && !loading) {
@@ -31,8 +40,10 @@ function PedidosAdmin() {
       });
       setPedidos(response.data.pedidos);
       setStatusOptions(response.data.status);
+      setIsLoading(false); // Definir como falso após carregar os dados
     } catch (error) {
       console.error('Erro ao buscar pedidos:', error);
+      setIsLoading(false); // Definir como falso em caso de erro
     }
   };
 
@@ -68,51 +79,57 @@ function PedidosAdmin() {
       </header>
       <div className="center-content">
         <h2>Pedidos</h2>
-        <table className="table-admin">
-          <thead>
-            <tr>
-              <th>ID Pedido</th>
-              <th>ID Usuário</th>
-              <th>Produtos</th>
-              <th>Valor</th>
-              <th>Status</th>
-              <th>Alterar Status</th>
-              <th>Endereço</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pedidos.map((pedido) => {
-              const statusAtual = statusOptions.find(status => status.id_status === pedido.id_status);
-              console.log(`Pedido ID: ${pedido.id_pedido}, ID Status: ${pedido.id_status}, Nome Status: ${statusAtual ? statusAtual.nome_status : 'Desconhecido'}`);
-              return (
-                <tr key={pedido.id_pedido}>
-                  <td>#{pedido.id_pedido}</td>
-                  <td>#{pedido.id_cliente}</td>
-                  <td>{pedido.produtos}</td>
-                  <td>R$ {pedido.valor.toFixed(2)}</td>
-                  <td>{statusAtual ? statusAtual.nome_status : 'Desconhecido'}</td>
-                  <td>
-                    <select
-                      className="form-select"
-                      value={pedido.id_status}
-                      onChange={(e) => handleStatusChange(pedido.id_pedido, e.target.value)}
-                    >
-                      {statusOptions.map((status) => {
-                        console.log(`ID Status: ${status.id_status}, Nome Status: ${status.nome_status}`);
-                        return (
-                          <option key={status.id_status} value={status.id_status}>
-                            {status.nome_status}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </td>
-                  <td>{pedido.endereco}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {isLoading ? (
+          <div>
+            <Shimmer />
+          </div>
+        ) : (
+          <table className="table-admin">
+            <thead>
+              <tr>
+                <th>ID Pedido</th>
+                <th>ID Usuário</th>
+                <th>Produtos</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Alterar Status</th>
+                <th>Endereço</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pedidos.map((pedido) => {
+                const statusAtual = statusOptions.find(status => status.id_status === pedido.id_status);
+                console.log(`Pedido ID: ${pedido.id_pedido}, ID Status: ${pedido.id_status}, Nome Status: ${statusAtual ? statusAtual.nome_status : 'Desconhecido'}`);
+                return (
+                  <tr key={pedido.id_pedido}>
+                    <td>#{pedido.id_pedido}</td>
+                    <td>#{pedido.id_cliente}</td>
+                    <td>{pedido.produtos}</td>
+                    <td>R$ {pedido.valor.toFixed(2)}</td>
+                    <td>{statusAtual ? statusAtual.nome_status : 'Desconhecido'}</td>
+                    <td>
+                      <select
+                        className="form-select"
+                        value={pedido.id_status}
+                        onChange={(e) => handleStatusChange(pedido.id_pedido, e.target.value)}
+                      >
+                        {statusOptions.map((status) => {
+                          console.log(`ID Status: ${status.id_status}, Nome Status: ${status.nome_status}`);
+                          return (
+                            <option key={status.id_status} value={status.id_status}>
+                              {status.nome_status}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </td>
+                    <td>{pedido.endereco}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
