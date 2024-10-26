@@ -5,6 +5,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
 import TopBar from '../Components/TopBar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useUserAuth } from '../UserAuthContext';
 
 const Shimmer = () => {
   return (
@@ -17,6 +19,8 @@ const Shimmer = () => {
 function CafeFrutados() {
   const [produtos, setProdutos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isAuthenticated, setRedirectUrl, checkAuthentication } = useUserAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:5000/produtos')
@@ -30,6 +34,17 @@ function CafeFrutados() {
         setIsLoading(false);
       });
   }, []);
+
+  const handleAddToCart = () => {
+    checkAuthentication(); // Verifica a autenticação do usuário
+    if (!isAuthenticated) {
+      setRedirectUrl('/cafe-frutados'); // Define a URL de redirecionamento após o login
+      navigate('/login'); // Redireciona para a página de login
+    } else {
+      // Lógica para adicionar ao carrinho
+      console.log('Produto adicionado ao carrinho');
+    }
+  };
 
   return (
     <div className="cafe-page">
@@ -59,7 +74,9 @@ function CafeFrutados() {
                 </div>
                 <p>{produto.nome}</p>
                 <p>{`R$ ${produto.preco}`}</p>
-                <button className='produtos-button'>Adicionar ao Carrinho</button>
+                <button className='produtos-button' onClick={handleAddToCart}>
+                  Adicionar ao Carrinho
+                </button>
               </div>
             ))
           ) : (
