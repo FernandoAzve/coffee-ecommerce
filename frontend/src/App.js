@@ -32,46 +32,46 @@ function App() {
             <Route path="/arabica" element={<CafeArabica />} />
             <Route path="/frutados" element={<CafeFrutados />} />
             <Route path="/acessorios" element={<Acessorios />} />
-            <Route path="/carrinho" element={<Carrinho />} />
+            <Route path="/carrinho" element={
+              <ProtectedRoute role="user">
+                <Carrinho />
+              </ProtectedRoute>
+            } />
             <Route path="/login" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/certificacoes" element={<Certificacoes />} />
             <Route path="/dicas" element={<Dicas />} />
-            <Route path="/finalizar-pedido" element={<FinalizarPedido />} />
-            <Route path="/meus-pedidos" element={<MeusPedidos />} />
+            <Route path="/finalizar-pedido" element={
+              <ProtectedRoute role="user">
+                <FinalizarPedido />
+              </ProtectedRoute>
+            } />
+            <Route path="/meus-pedidos" element={
+              <ProtectedRoute role="user">
+                <MeusPedidos />
+              </ProtectedRoute>
+            } />
             <Route path="/login-admin" element={<LoginAdmin />} />
-            <Route
-              path="/usuarios-admin"
-              element={
-                <ProtectedRoute>
-                  <UsuariosAdmin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/pedidos-admin"
-              element={
-                <ProtectedRoute>
-                  <PedidosAdmin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/estoque-admin"
-              element={
-                <ProtectedRoute>
-                  <EstoqueAdmin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/acesso-privilegiado"
-              element={
-                <ProtectedRoute>
-                  <AcessoPrivilegiado />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/usuarios-admin" element={
+              <ProtectedRoute role="admin">
+                <UsuariosAdmin />
+              </ProtectedRoute>
+            } />
+            <Route path="/pedidos-admin" element={
+              <ProtectedRoute role="admin">
+                <PedidosAdmin />
+              </ProtectedRoute>
+            } />
+            <Route path="/estoque-admin" element={
+              <ProtectedRoute role="admin">
+                <EstoqueAdmin />
+              </ProtectedRoute>
+            } />
+            <Route path="/acesso-privilegiado" element={
+              <ProtectedRoute role="admin">
+                <AcessoPrivilegiado />
+              </ProtectedRoute>
+            } />
           </Routes>
         </Router>
       </AdminAuthProvider>

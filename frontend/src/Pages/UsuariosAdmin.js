@@ -65,7 +65,7 @@ function UsuariosAdmin() {
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
           <a href="/acesso-privilegiado">Acesso Privilegiado</a>
-          <button onClick={logoutAdmin}>Logout</button> {/* Botão de logout */}
+          <button onClick={logoutAdmin}>Logout</button>
         </nav>
       </header>
       <div className="center-content">

@@ -13,9 +13,6 @@ function Header() {
         <a href="/arabica">Cafés Arábica</a>
         <a href="/frutados">Cafés Frutados</a>
         <a href="/acessorios">Acessórios</a>
-        <a href="/carrinho">
-          <i className="bi bi-cart"></i>
-        </a>
         {!isAuthenticated ? (
           <>
             <a href="/login">Login</a>
@@ -24,6 +21,9 @@ function Header() {
         ) : (
           <>
             <a href="/meus-pedidos">Meus Pedidos</a>
+            <a href="/carrinho">
+              <i className="bi bi-cart"></i>
+            </a>
             <button onClick={logoutUser} className='logout-button'>Logout</button>
           </>
         )}

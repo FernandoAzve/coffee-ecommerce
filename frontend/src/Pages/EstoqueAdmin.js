@@ -10,7 +10,7 @@ const EstoqueAdmin = () => {
   const [produtos, setProdutos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { isAdminAuthenticated } = useAdminAuth(); // Usa o estado de autenticação do admin
+  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth(); // Usa o estado de autenticação do admin
 
   // Verifica se o admin está autenticado
   useEffect(() => {
@@ -40,6 +40,7 @@ const EstoqueAdmin = () => {
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
           <a href="/acesso-privilegiado">Acesso Privilegiado</a>
+          <button onClick={logoutAdmin}>Logout</button> {/* Botão de logout */}
         </nav>
       </header>
       <div className="center-content">
