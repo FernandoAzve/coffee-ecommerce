@@ -19,6 +19,7 @@ const Shimmer = () => {
 function CafeFrutados() {
   const [produtos, setProdutos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para controlar a exibição da mensagem de confirmação
   const { isAuthenticated, setRedirectUrl, checkAuthentication, loading } = useUserAuth();
   const navigate = useNavigate();
 
@@ -58,6 +59,10 @@ function CafeFrutados() {
           }
         });
         console.log('Produto adicionado ao carrinho:', response.data);
+        setShowConfirmation(true); // Exibir a mensagem de confirmação
+        setTimeout(() => {
+          setShowConfirmation(false); // Ocultar a mensagem de confirmação após 3 segundos
+        }, 3000);
       } catch (error) {
         console.error('Erro ao adicionar produto ao carrinho:', error);
       }
@@ -102,6 +107,11 @@ function CafeFrutados() {
           )}
         </div>
       </section>
+      {showConfirmation && (
+        <div className="confirmation-message">
+          Produto adicionado ao carrinho com sucesso!
+        </div>
+      )}
     </div>
   );
 }

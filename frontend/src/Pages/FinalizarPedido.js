@@ -14,6 +14,7 @@ function FinalizarPedido() {
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
   const [cep, setCep] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para controlar a exibição da mensagem de confirmação
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -37,8 +38,11 @@ function FinalizarPedido() {
         }
       });
       console.log('Pedido realizado com sucesso:', response.data);
-      alert('Pedido realizado com sucesso!');
-      navigate('/meus-pedidos');
+      setShowConfirmation(true); // Exibir a mensagem de confirmação
+      setTimeout(() => {
+        setShowConfirmation(false); // Ocultar a mensagem de confirmação após 3 segundos
+        navigate('/meus-pedidos'); // Redirecionar após a animação
+      }, 3000);
     } catch (error) {
       console.error('Erro ao finalizar pedido:', error);
       alert('Erro ao finalizar pedido. Tente novamente.');
@@ -109,6 +113,11 @@ function FinalizarPedido() {
           Finalizar Pedido
         </button>
       </form>
+      {showConfirmation && (
+        <div className="confirmation-message">
+          Pedido realizado com sucesso!
+        </div>
+      )}
     </div>
   );
 }

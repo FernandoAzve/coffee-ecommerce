@@ -99,7 +99,6 @@ function PedidosAdmin() {
             <tbody>
               {pedidos.map((pedido) => {
                 const statusAtual = statusOptions.find(status => status.id_status === pedido.id_status);
-                console.log(`Pedido ID: ${pedido.id_pedido}, ID Status: ${pedido.id_status}, Nome Status: ${statusAtual ? statusAtual.nome_status : 'Desconhecido'}`);
                 return (
                   <tr key={pedido.id_pedido}>
                     <td>#{pedido.id_pedido}</td>
@@ -114,7 +113,6 @@ function PedidosAdmin() {
                         onChange={(e) => handleStatusChange(pedido.id_pedido, e.target.value)}
                       >
                         {statusOptions.map((status) => {
-                          console.log(`ID Status: ${status.id_status}, Nome Status: ${status.nome_status}`);
                           return (
                             <option key={status.id_status} value={status.id_status}>
                               {status.nome_status}

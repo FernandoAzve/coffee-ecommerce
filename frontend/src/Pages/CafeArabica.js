@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import '../Styles/CafeStyles.css';
+import { useNavigate } from 'react-router-dom';
+import '../Styles/HomeStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
 import TopBar from '../Components/TopBar';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../UserAuthContext';
 
 const Shimmer = () => {
@@ -19,29 +19,30 @@ const Shimmer = () => {
 function CafeArabica() {
   const [produtos, setProdutos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { isAuthenticated, setRedirectUrl, checkAuthentication, loading } = useUserAuth();
+  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para controlar a exibição da mensagem de confirmação
+  const { isAuthenticated, setRedirectUrl, checkAuthentication } = useUserAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/produtos')
-      .then(response => {
+    const fetchProdutos = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/produtos');
         const produtosArabica = response.data.filter(produto => produto.categoria === 'Café Arábica');
         setProdutos(produtosArabica);
         setIsLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Erro ao buscar produtos:', error);
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchProdutos();
   }, []);
 
   const handleAddToCart = async (produto) => {
     checkAuthentication(); // Verifica a autenticação do usuário
-    if (loading) {
-      return; // Aguarda o carregamento
-    }
     if (!isAuthenticated) {
-      setRedirectUrl('/cafe-arabica'); // Define a URL de redirecionamento após o login
+      setRedirectUrl('/'); // Define a URL de redirecionamento após o login
       navigate('/login'); // Redireciona para a página de login
     } else {
       try {
@@ -58,6 +59,10 @@ function CafeArabica() {
           }
         });
         console.log('Produto adicionado ao carrinho:', response.data);
+        setShowConfirmation(true); // Exibir a mensagem de confirmação
+        setTimeout(() => {
+          setShowConfirmation(false); // Ocultar a mensagem de confirmação após 3 segundos
+        }, 3000);
       } catch (error) {
         console.error('Erro ao adicionar produto ao carrinho:', error);
       }
@@ -65,43 +70,42 @@ function CafeArabica() {
   };
 
   return (
-    <div className="cafe-page">
+    <div className="home-page">
       <TopBar />
       <Header />
-      <div className="center-content">
-        <h1>Cafés 100% Arábica</h1>
-        <p className="description">
-          Descubra a pureza e a excelência dos cafés 100% arábica. Experimente sabores extraordinários em cada xícara.
-        </p>
-        {isLoading && (
-          <div className="shimmer-container">
-            <Shimmer />
-          </div>
-        )}
-      </div>
-
-      <section className="mais-comprados">
-        <div className="produtos">
-          {isLoading ? (
-            <p></p>
-          ) : produtos.length > 0 ? (
-            produtos.map((produto, index) => (
-              <div key={index} className="produto">
-                <div className="imagem">
-                  <img src={produto.imagem} alt={produto.nome} />
-                </div>
-                <p>{produto.nome}</p>
-                <p>{`R$ ${produto.preco}`}</p>
-                <button className='produtos-button' onClick={() => handleAddToCart(produto)}>
-                  Adicionar ao Carrinho
-                </button>
-              </div>
-            ))
-          ) : (
-            <p>Nenhum produto encontrado.</p>
-          )}
+      <div className="banner">BANNER</div>
+      <h2 className="center-content">Café Arábica</h2>
+      {isLoading ? (
+        <div className="shimmer-container">
+          <Shimmer />
         </div>
-      </section>
+      ) : (
+        <section className="mais-comprados">
+          <div className="produtos">
+            {produtos.length > 0 ? (
+              produtos.map((produto, index) => (
+                <div key={index} className="produto">
+                  <div className="imagem">
+                    <img src={produto.imagem} alt={produto.nome} />
+                  </div>
+                  <p>{produto.nome}</p>
+                  <p>{`R$ ${produto.preco}`}</p>
+                  <button className='produtos-button' onClick={() => handleAddToCart(produto)}>
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>Nenhum produto encontrado.</p>
+            )}
+          </div>
+        </section>
+      )}
+      {showConfirmation && (
+        <div className="confirmation-message">
+          Produto adicionado ao carrinho com sucesso!
+        </div>
+      )}
     </div>
   );
 }
