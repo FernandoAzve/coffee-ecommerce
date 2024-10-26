@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
 import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
 import '../Styles/Admin.css';
@@ -16,32 +16,8 @@ const Shimmer = () => {
 function UsuariosAdmin() {
   const [clientes, setClientes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate(); // Hook para redirecionamento
-  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth(); // Verifica se o admin está autenticado e obtém a função de logout
-
-  // Função para buscar clientes
-  const fetchClientes = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('adminToken'); // Obtém o token do localStorage
-      const response = await fetch('http://localhost:5000/clientes', {
-        headers: {
-          Authorization: `Bearer ${token}`, // Envia o token no cabeçalho
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setClientes(data);
-      } else {
-        // Redireciona para login caso o token seja inválido ou expirado
-        logoutAdmin();
-        navigate('/login-admin');
-      }
-    } catch (error) {
-      console.error('Erro ao buscar clientes:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [logoutAdmin, navigate]);
+  const navigate = useNavigate();
+  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth();
 
   useEffect(() => {
     if (!isAdminAuthenticated) {
@@ -49,15 +25,43 @@ function UsuariosAdmin() {
     } else {
       fetchClientes(); // Busca os clientes quando o admin está autenticado
     }
-  }, [isAdminAuthenticated, fetchClientes, navigate]);
+  }, [isAdminAuthenticated, navigate]);
 
-  // Exibe o shimmer enquanto os dados estão sendo carregados
-  if (isLoading) {
-    return <Shimmer />;
-  }
+  const fetchClientes = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/clientes');
+      const data = await response.json();
+      setClientes(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar clientes:', error);
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteCliente = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/clientes/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setClientes(clientes.filter(cliente => cliente.id !== id));
+        alert('Cliente removido com sucesso.');
+      } else {
+        alert('Erro ao remover o cliente.');
+      }
+    } catch (error) {
+      console.error('Erro ao remover cliente:', error);
+      alert('Erro ao conectar com o servidor.');
+    }
+  };
+
+  useEffect(() => {
+    fetchClientes();
+  }, []);
 
   return (
-    <div className="admin-page">
+    <div className="home-page">
       <header className="header">
         <div className="logo">LOGO</div>
         <nav className="nav">
@@ -65,33 +69,59 @@ function UsuariosAdmin() {
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
           <a href="/acesso-privilegiado">Acesso Privilegiado</a>
-          <button onClick={logoutAdmin}>Logout</button>
+          <button onClick={logoutAdmin} className='logout-button'>Logout</button>
         </nav>
       </header>
       <div className="center-content">
         <h2>Usuários</h2>
-        <table className="table-admin">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientes.map((cliente) => (
-              <tr key={cliente.id}>
-                <td>{cliente.id}</td>
-                <td>{cliente.nome}</td>
-                <td>{cliente.email}</td>
-                <td>
-                  {/* Adicione ações aqui, se necessário */}
-                </td>
+        {isLoading ? (
+          <div className="shimmer-container">
+            <Shimmer />
+          </div>
+        ) : (
+          <table className="table-admin">
+            <thead>
+              <tr>
+                <th>ID Usuário</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>E-mail</th>
+                <th>Logradouro</th>
+                <th>Número</th>
+                <th>Complemento</th>
+                <th>CEP</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Telefone</th>
+                <th>Remover</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {clientes.map((cliente, index) => (
+                <tr key={index}>
+                  <td title={cliente.id}>{cliente.id}</td>
+                  <td title={cliente.nome}>{cliente.nome}</td>
+                  <td title={cliente.cpf}>{cliente.cpf}</td>
+                  <td title={cliente.email}>{cliente.email}</td>
+                  <td title={cliente.endereco.logradouro}>{cliente.endereco.logradouro}</td>
+                  <td title={cliente.endereco.numero}>{cliente.endereco.numero}</td>
+                  <td title={cliente.endereco.complemento}>{cliente.endereco.complemento}</td>
+                  <td title={cliente.endereco.cep}>{cliente.endereco.cep}</td>
+                  <td title={cliente.endereco.bairro}>{cliente.endereco.bairro}</td>
+                  <td title={cliente.endereco.cidade}>{cliente.endereco.cidade}</td>
+                  <td title={cliente.endereco.estado}>{cliente.endereco.estado}</td>
+                  <td title={cliente.telefone}>{cliente.telefone}</td>
+                  <td>
+                    <button className="btn btn-link p-0" onClick={() => handleDeleteCliente(cliente.id)}>
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
