@@ -24,6 +24,7 @@ def create_app():
     from app.controller.ClienteAdminController import GetCliente, DeleteCliente
     from app.controller.CadastroAdminController import CadastroAdmin
     from app.controller.AdminController import GetAdm, DeleteAdm
+    from app.controller.LoginAdminController import AdminLoginController
 
     api.add_resource(ProdutoResource, '/produtos')
     api.add_resource(ProdutoByIdResource, '/produtos/<int:id>')
@@ -37,5 +38,6 @@ def create_app():
     api.add_resource(GetAdm, '/admins')
     api.add_resource(DeleteAdm, '/admins/<int:adm_id>')
     api.add_resource(CadastroAdmin, '/admins')
+    api.add_resource(AdminLoginController, '/admin/login')
 
     return app

@@ -1,4 +1,6 @@
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserAuth } from '../UserAuthContext';
 import '../Styles/Carrinho.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -6,19 +8,27 @@ import Header from '../Components/Header';
 import TopBar from '../Components/TopBar';
 
 function Carrinho() {
+  const { isAuthenticated, loading } = useUserAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      navigate('/login');
+    }
+  }, [loading, isAuthenticated, navigate]);
 
   const handleFinalizarCompra = () => {
     navigate('/finalizar-pedido');
   };
 
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <div className="home-page">
-
       <TopBar />
-
       <Header />
-
       <div className="center-content">
         <h2>Carrinho</h2>
         <table className="table">
@@ -83,7 +93,7 @@ function Carrinho() {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

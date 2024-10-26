@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext';
+import { useUserAuth } from '../UserAuthContext';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -8,7 +8,7 @@ import TopBar from '../Components/TopBar';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { loginUser } = useUserAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -36,8 +36,8 @@ const Login = () => {
       if (response.ok) {
         setSuccess('Login bem-sucedido!');
         setError('');
-        localStorage.setItem('token', data.token);
-        login();
+        localStorage.setItem('userToken', data.token);
+        loginUser(data.token);
         navigate('/');
       } else {
         setError(data.error || 'Erro ao tentar fazer login');

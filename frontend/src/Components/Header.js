@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAuth } from '../AuthContext';
+import { useUserAuth } from '../UserAuthContext';
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logoutUser } = useUserAuth();
 
   return (
     <header className="header">
@@ -13,9 +13,6 @@ function Header() {
         <a href="/arabica">Cafés Arábica</a>
         <a href="/frutados">Cafés Frutados</a>
         <a href="/acessorios">Acessórios</a>
-        <a href="/carrinho">
-          <i className="bi bi-cart"></i>
-        </a>
         {!isAuthenticated ? (
           <>
             <a href="/login">Login</a>
@@ -24,7 +21,10 @@ function Header() {
         ) : (
           <>
             <a href="/meus-pedidos">Meus Pedidos</a>
-            <button onClick={logout} className='logout-button'>Logout</button>
+            <a href="/carrinho">
+              <i className="bi bi-cart"></i>
+            </a>
+            <button onClick={logoutUser} className='logout-button'>Logout</button>
           </>
         )}
       </nav>
