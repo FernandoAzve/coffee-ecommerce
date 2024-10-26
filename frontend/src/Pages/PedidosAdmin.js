@@ -1,24 +1,55 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
-import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAdminAuth } from '../AdminAuthContext';
+import axios from 'axios';
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function PedidosAdmin() {
-  const { isAdminAuthenticated, loading, logoutAdmin } = useAdminAuth(); // Verifica se o admin está autenticado e o estado de carregamento
-  const navigate = useNavigate(); // Hook para redirecionamento
+  const { isAdminAuthenticated, loading, logoutAdmin } = useAdminAuth();
+  const navigate = useNavigate();
+  const [pedidos, setPedidos] = useState([]);
+  const [statusOptions, setStatusOptions] = useState([]);
 
   useEffect(() => {
-    console.log('isAdminAuthenticated:', isAdminAuthenticated); // Adicione este log para depuração
-    // Se o admin não estiver autenticado, redireciona para a página de login
     if (!isAdminAuthenticated && !loading) {
       navigate('/login-admin');
+    } else if (isAdminAuthenticated) {
+      fetchPedidos();
     }
   }, [isAdminAuthenticated, loading, navigate]);
 
-  // Exibe um spinner de carregamento enquanto verifica a autenticação
+  const fetchPedidos = async () => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await axios.get('http://localhost:5000/todos-pedidos', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setPedidos(response.data.pedidos);
+      setStatusOptions(response.data.status);
+    } catch (error) {
+      console.error('Erro ao buscar pedidos:', error);
+    }
+  };
+
+  const handleStatusChange = async (pedidoId, novoStatus) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      await axios.put(`http://localhost:5000/atualizar-status-pedido/${pedidoId}`, { id_status: novoStatus }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      fetchPedidos(); // Atualiza a lista de pedidos após a mudança de status
+    } catch (error) {
+      console.error('Erro ao atualizar status do pedido:', error);
+    }
+  };
+
   if (loading) {
     return <div>Carregando...</div>;
   }
@@ -32,7 +63,7 @@ function PedidosAdmin() {
           <a href="/pedidos-admin">Pedidos</a>
           <a href="/estoque-admin">Estoque</a>
           <a href="/acesso-privilegiado">Acesso Privilegiado</a>
-          <button onClick={logoutAdmin} className='logout-button'>Logout</button> {/* Botão de logout */}
+          <button onClick={logoutAdmin} className='logout-button'>Logout</button>
         </nav>
       </header>
       <div className="center-content">
@@ -44,39 +75,42 @@ function PedidosAdmin() {
               <th>ID Usuário</th>
               <th>Produtos</th>
               <th>Valor</th>
-              <th>Endereço</th>
               <th>Status</th>
+              <th>Alterar Status</th>
+              <th>Endereço</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>#432</td>
-              <td>#001</td>
-              <td>1x Café Arábica, 2x Café Frutados, 1x Cafeteira</td>
-              <td>R$ 601,00</td>
-              <td>Rua Joao Maria, 10, Bairro, Itaquaquecetuba, 01234-560, Rua sem saída</td>
-              <td>
-                <div className="dropdown">
-                  <button
-                    className="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton2"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Processando
-                  </button>
-                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <button className="dropdown-item" type="button">Pendente</button>
-                    <button className="dropdown-item" type="button">Processando</button>
-                    <button className="dropdown-item" type="button">Enviado</button>
-                    <button className="dropdown-item" type="button">Entregue</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            {/* Outros pedidos podem ser mapeados aqui */}
+            {pedidos.map((pedido) => {
+              const statusAtual = statusOptions.find(status => status.id_status === pedido.id_status);
+              console.log(`Pedido ID: ${pedido.id_pedido}, ID Status: ${pedido.id_status}, Nome Status: ${statusAtual ? statusAtual.nome_status : 'Desconhecido'}`);
+              return (
+                <tr key={pedido.id_pedido}>
+                  <td>#{pedido.id_pedido}</td>
+                  <td>#{pedido.id_cliente}</td>
+                  <td>{pedido.produtos}</td>
+                  <td>R$ {pedido.valor.toFixed(2)}</td>
+                  <td>{statusAtual ? statusAtual.nome_status : 'Desconhecido'}</td>
+                  <td>
+                    <select
+                      className="form-select"
+                      value={pedido.id_status}
+                      onChange={(e) => handleStatusChange(pedido.id_pedido, e.target.value)}
+                    >
+                      {statusOptions.map((status) => {
+                        console.log(`ID Status: ${status.id_status}, Nome Status: ${status.nome_status}`);
+                        return (
+                          <option key={status.id_status} value={status.id_status}>
+                            {status.nome_status}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </td>
+                  <td>{pedido.endereco}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

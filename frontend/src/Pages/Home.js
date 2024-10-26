@@ -62,14 +62,29 @@ function Home() {
     fetchProdutos();
   }, []);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async (produto) => {
     checkAuthentication(); // Verifica a autenticação do usuário
     if (!isAuthenticated) {
       setRedirectUrl('/'); // Define a URL de redirecionamento após o login
       navigate('/login'); // Redireciona para a página de login
     } else {
-      // Lógica para adicionar ao carrinho
-      console.log('Produto adicionado ao carrinho');
+      try {
+        const token = localStorage.getItem('userToken');
+        const data = {
+          id_produto: produto.id,
+          valor_unitario: parseFloat(produto.preco), // Converte para número
+          quantidade: 1 // Defina a quantidade desejada
+        };
+        console.log('Enviando dados para o backend:', data);
+        const response = await axios.post('http://localhost:5000/carrinho', data, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log('Produto adicionado ao carrinho:', response.data);
+      } catch (error) {
+        console.error('Erro ao adicionar produto ao carrinho:', error);
+      }
     }
   };
 
@@ -94,7 +109,7 @@ function Home() {
                   </div>
                   <p>{produto.nome}</p>
                   <p>{`R$ ${produto.preco}`}</p>
-                  <button className='produtos-button' onClick={handleAddToCart}>
+                  <button className="produtos-button" onClick={() => handleAddToCart(produto)}>
                     Adicionar ao Carrinho
                   </button>
                 </div>

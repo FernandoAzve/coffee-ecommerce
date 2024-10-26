@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../UserAuthContext';
+import axios from 'axios';
 import '../Styles/MeusPedidos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -10,12 +11,29 @@ import TopBar from '../Components/TopBar';
 function MeusPedidos() {
   const { isAuthenticated, loading } = useUserAuth();
   const navigate = useNavigate();
+  const [pedidos, setPedidos] = useState([]);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       navigate('/login');
+    } else if (isAuthenticated) {
+      fetchPedidos();
     }
   }, [loading, isAuthenticated, navigate]);
+
+  const fetchPedidos = async () => {
+    try {
+      const token = localStorage.getItem('userToken');
+      const response = await axios.get('http://localhost:5000/meus-pedidos', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setPedidos(response.data.pedidos);
+    } catch (error) {
+      console.error('Erro ao buscar pedidos:', error);
+    }
+  };
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -37,19 +55,14 @@ function MeusPedidos() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>#125</td>
-              <td>R$ 36,00</td>
-              <td>Em preparação</td>
-              <td>31/12/2024</td>
-            </tr>
-            <tr>
-              <td>#126</td>
-              <td>R$ 45,00</td>
-              <td>Enviado</td>
-              <td>01/01/2025</td>
-            </tr>
-            {/* Outros pedidos podem ser mapeados aqui */}
+            {pedidos.map((pedido) => (
+              <tr key={pedido.id_pedido}>
+                <td>#{pedido.id_pedido}</td>
+                <td>R$ {pedido.valor.toFixed(2)}</td>
+                <td>{pedido.status}</td>
+                <td>{pedido.data_entrega}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
