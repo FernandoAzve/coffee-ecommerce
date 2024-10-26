@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode'; // Importação correta
+import { useNavigate } from 'react-router-dom'; // Importa o hook useNavigate
 
 const UserAuthContext = createContext();
 
 export function UserAuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true); // Adiciona estado de carregamento
+    const [loading, setLoading] = useState(true); // Inicialmente está carregando
+    const [redirectUrl, setRedirectUrl] = useState('/'); // Adiciona estado para URL de redirecionamento
+    const navigate = useNavigate(); // Define navigate usando o hook useNavigate
 
     // Função para verificar se o token é válido
     const checkToken = (token) => {
@@ -20,7 +23,6 @@ export function UserAuthProvider({ children }) {
     };
 
     useEffect(() => {
-        // Verifica o token de usuário comum
         const userToken = localStorage.getItem('userToken');
         if (userToken && checkToken(userToken)) {
             setIsAuthenticated(true);
@@ -31,10 +33,23 @@ export function UserAuthProvider({ children }) {
         setLoading(false); // Define o carregamento como concluído
     }, []);
 
+    const checkAuthentication = () => {
+        setLoading(true);
+        const userToken = localStorage.getItem('userToken');
+        if (userToken && checkToken(userToken)) {
+            setIsAuthenticated(true);
+        } else {
+            localStorage.removeItem('userToken'); // Remove o token expirado ou inválido
+            setIsAuthenticated(false);
+        }
+        setLoading(false);
+    };
+
     const loginUser = (token) => {
         if (checkToken(token)) {
             localStorage.setItem('userToken', token);
             setIsAuthenticated(true);
+            navigate(redirectUrl); // Redireciona para a URL armazenada após o login
         } else {
             console.error('Token de usuário inválido ou expirado');
         }
@@ -46,7 +61,7 @@ export function UserAuthProvider({ children }) {
     };
 
     return (
-        <UserAuthContext.Provider value={{ isAuthenticated, loading, loginUser, logoutUser }}>
+        <UserAuthContext.Provider value={{ isAuthenticated, loading, loginUser, logoutUser, checkAuthentication, setRedirectUrl }}>
             {children}
         </UserAuthContext.Provider>
     );

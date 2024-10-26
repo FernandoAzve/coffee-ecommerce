@@ -19,28 +19,28 @@ import UsuariosAdmin from './Pages/UsuariosAdmin';
 import PedidosAdmin from './Pages/PedidosAdmin';
 import EstoqueAdmin from './Pages/EstoqueAdmin';
 import AcessoPrivilegiado from './Pages/AcessoPrivilegiado';
-import ProtectedRoute from './ProtectedRoute'; // Importa o componente de rota protegida
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
-    <UserAuthProvider>
-      <AdminAuthProvider>
-        <Router>
+    <Router>
+      <UserAuthProvider>
+        <AdminAuthProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cursos" element={<Cursos />} />
             <Route path="/arabica" element={<CafeArabica />} />
             <Route path="/frutados" element={<CafeFrutados />} />
             <Route path="/acessorios" element={<Acessorios />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+            <Route path="/certificacoes" element={<Certificacoes />} />
+            <Route path="/dicas" element={<Dicas />} />
             <Route path="/carrinho" element={
               <ProtectedRoute role="user">
                 <Carrinho />
               </ProtectedRoute>
             } />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/certificacoes" element={<Certificacoes />} />
-            <Route path="/dicas" element={<Dicas />} />
             <Route path="/finalizar-pedido" element={
               <ProtectedRoute role="user">
                 <FinalizarPedido />
@@ -73,9 +73,9 @@ function App() {
               </ProtectedRoute>
             } />
           </Routes>
-        </Router>
-      </AdminAuthProvider>
-    </UserAuthProvider>
+        </AdminAuthProvider>
+      </UserAuthProvider>
+    </Router>
   );
 }
 
