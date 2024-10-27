@@ -47,8 +47,9 @@ function LoginAdmin() {
   return (
     <div className="home-page">
       <header className="header">
-        <div className="logo">LOGO</div>
-      </header>
+        <div className="logo-container">
+          <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+        </div>      </header>
       <h2 className="center-content">Admin</h2>
       <form onSubmit={handleSubmit} style={{ maxWidth: '300px', margin: '0 auto' }}>
         <div style={{ marginBottom: '20px' }}>
