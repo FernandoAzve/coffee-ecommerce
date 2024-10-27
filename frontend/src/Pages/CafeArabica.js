@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Styles/HomeStyles.css';
+import '../Styles/HomeStyles.css'; // Importar os estilos
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 import axios from 'axios';
 import { useUserAuth } from '../UserAuthContext';
 
@@ -12,6 +11,9 @@ const Shimmer = () => {
   return (
     <div className="shimmer-wrapper">
       <div className="shimmer-circle"></div>
+      <div className="shimmer-line"></div>
+      <div className="shimmer-line"></div>
+      <div className="shimmer-line"></div>
     </div>
   );
 };
@@ -71,9 +73,7 @@ function CafeArabica() {
 
   return (
     <div className="home-page">
-      <TopBar />
       <Header />
-      <div className="banner">BANNER</div>
       <h2 className="center-content">Café Arábica</h2>
       {isLoading ? (
         <div className="shimmer-container">

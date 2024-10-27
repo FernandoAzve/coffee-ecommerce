@@ -5,7 +5,6 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 
 function FinalizarPedido() {
   const { isAuthenticated, loading } = useUserAuth();
@@ -55,7 +54,6 @@ function FinalizarPedido() {
 
   return (
     <div className="home-page">
-      <TopBar />
       <Header />
       <h2 className="center-content">Finalizar pedido</h2>
       <form style={{ maxWidth: '300px', margin: '0 auto' }} onSubmit={handleSubmit}>

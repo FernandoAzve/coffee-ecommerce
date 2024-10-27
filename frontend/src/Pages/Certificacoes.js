@@ -2,16 +2,11 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 
 function Certificacoes() {
   return (
     <div className="home-page">
-
-      <TopBar />
-
       <Header />
-
       <div className="center-content">
         <h1>Certificações</h1>
         <p className="description">

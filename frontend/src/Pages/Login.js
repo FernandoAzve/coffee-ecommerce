@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,7 +50,6 @@ const Login = () => {
 
   return (
     <div className="home-page">
-      <TopBar />
       <Header />
       <h2 className="text-center mb-4 mt-4">Realize o Login</h2>
       <form className="mx-auto" style={{ maxWidth: '400px' }} onSubmit={handleLogin}>
