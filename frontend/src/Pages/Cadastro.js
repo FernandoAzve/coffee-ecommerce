@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 
 function Cadastro() {
   const navigate = useNavigate();
@@ -59,7 +58,6 @@ function Cadastro() {
 
   return (
     <div className="home-page">
-      <TopBar />
       <Header />
       <h2 className="text-center mb-4 mt-4">Realize o Cadastro</h2>
 

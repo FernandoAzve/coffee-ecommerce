@@ -4,14 +4,18 @@ import '../Styles/HomeStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 import axios from 'axios';
 import { useUserAuth } from '../UserAuthContext';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const Shimmer = () => {
   return (
     <div className="shimmer-wrapper">
       <div className="shimmer-circle"></div>
+      <div className="shimmer-line"></div>
+      <div className="shimmer-line"></div>
+      <div className="shimmer-line"></div>
     </div>
   );
 };
@@ -27,33 +31,8 @@ function Home() {
     const fetchProdutos = async () => {
       try {
         const response = await axios.get('http://localhost:5000/produtos');
-        const produtosAcessorios = response.data.filter(produto => produto.categoria === 'Acessórios');
-        const produtosArabica = response.data.filter(produto => produto.categoria === 'Café Arábica');
-        const produtosFrutado = response.data.filter(produto => produto.categoria === 'Café Frutado');
-
-        const getRandomItems = (arr, num) => {
-          const shuffled = [...arr].sort(() => 0.5 - Math.random());
-          return shuffled.slice(0, num);
-        };
-
-        const selectedAcessorios = getRandomItems(produtosAcessorios, 2);
-        const selectedArabica = getRandomItems(produtosArabica, 2);
-        const selectedFrutado = getRandomItems(produtosFrutado, 2);
-
-        let selectedProducts = [...selectedAcessorios, ...selectedArabica, ...selectedFrutado];
-
-        if (selectedProducts.length < 6) {
-          const remainingProducts = response.data.filter(produto => !selectedProducts.includes(produto));
-          const additionalProducts = getRandomItems(remainingProducts, 6 - selectedProducts.length);
-          selectedProducts = [...selectedProducts, ...additionalProducts];
-        }
-
-        setProdutos(selectedProducts);
-
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 650);
-
+        setProdutos(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Erro ao buscar produtos:', error);
         setIsLoading(false);
@@ -93,11 +72,45 @@ function Home() {
     }
   };
 
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 1024 },
+      items: 4
+    },
+    desktop: {
+      breakpoint: { max: 1024, min: 768 },
+      items: 3
+    },
+    tablet: {
+      breakpoint: { max: 768, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
+
   return (
     <div className="home-page">
-      <TopBar />
       <Header />
-      <div className="banner">BANNER</div>
+      <div className="banner">
+        <Carousel responsive={responsive}>
+          {produtos.map((produto) => (
+            <div key={produto.id} className="carousel-item-container">
+              <img
+                className="d-block w-100"
+                src={produto.imagem}
+                alt={produto.nome}
+              />
+              <div className="carousel-caption">
+                <h3>{produto.nome}</h3>
+                <p>{`R$ ${produto.preco}`}</p>
+              </div>
+            </div>
+          ))}
+        </Carousel>
+      </div>
       <h2 className="center-content">Produtos em Destaque</h2>
       {isLoading ? (
         <div className="shimmer-container">

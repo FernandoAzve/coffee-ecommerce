@@ -1,0 +1,22 @@
+.top-bar {
+    background-color: #4b2e2e;
+    /* Cor que remete ao café */
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    /* Alinha os itens à direita */
+    gap: 20px;
+}
+
+.top-bar a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.top-bar a:hover {
+    color: #d3a87c;
+    /* Cor que remete ao café com leite */
+}

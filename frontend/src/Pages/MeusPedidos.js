@@ -6,7 +6,6 @@ import '../Styles/MeusPedidos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import TopBar from '../Components/TopBar';
 
 function MeusPedidos() {
   const { isAuthenticated, loading } = useUserAuth();
@@ -41,7 +40,6 @@ function MeusPedidos() {
 
   return (
     <div className="home-page">
-      <TopBar />
       <Header />
       <div className="center-content">
         <h2>Meus pedidos</h2>
