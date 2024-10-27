@@ -68,7 +68,9 @@ function PedidosAdmin() {
   return (
     <div className="home-page">
       <header className="header">
-        <div className="logo">LOGO</div>
+        <div className="logo-container">
+          <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+        </div>
         <nav className="nav">
           <a href="/usuarios-admin">Usuários</a>
           <a href="/pedidos-admin">Pedidos</a>
@@ -97,7 +99,6 @@ function PedidosAdmin() {
             </thead>
             <tbody>
               {pedidos.map((pedido) => {
-                const statusAtual = statusOptions.find(status => status.id_status === pedido.id_status);
                 return (
                   <tr key={pedido.id_pedido}>
                     <td>#{pedido.id_pedido}</td>

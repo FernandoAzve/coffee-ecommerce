@@ -97,7 +97,9 @@ function AcessoPrivilegiado() {
     return (
         <div className="home-page">
             <header className="header">
-                <div className="logo">LOGO</div>
+                <div className="logo-container">
+                    <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+                </div>
                 <nav className="nav">
                     <a href="/usuarios-admin">Usuários</a>
                     <a href="/pedidos-admin">Pedidos</a>
