@@ -29,12 +29,11 @@ const EstoqueAdmin = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth(); // Usa o estado de autenticação do admin
+  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth();
 
-  // Verifica se o admin está autenticado
   useEffect(() => {
     if (!isAdminAuthenticated) {
-      navigate('/login-admin'); // Redireciona para a página de login se não estiver autenticado
+      navigate('/login-admin');
     }
   }, [isAdminAuthenticated, navigate]);
 

@@ -13,7 +13,7 @@ function FinalizarPedido() {
   const [numero, setNumero] = useState('');
   const [complemento, setComplemento] = useState('');
   const [cep, setCep] = useState('');
-  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para controlar a exibição da mensagem de confirmação
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -37,10 +37,10 @@ function FinalizarPedido() {
         }
       });
       console.log('Pedido realizado com sucesso:', response.data);
-      setShowConfirmation(true); // Exibir a mensagem de confirmação
+      setShowConfirmation(true);
       setTimeout(() => {
-        setShowConfirmation(false); // Ocultar a mensagem de confirmação após 3 segundos
-        navigate('/meus-pedidos'); // Redirecionar após a animação
+        setShowConfirmation(false);
+        navigate('/meus-pedidos');
       }, 3000);
     } catch (error) {
       console.error('Erro ao finalizar pedido:', error);

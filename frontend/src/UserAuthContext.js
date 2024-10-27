@@ -1,24 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Importação correta
-import { useNavigate } from 'react-router-dom'; // Importa o hook useNavigate
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const UserAuthContext = createContext();
 
 export function UserAuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true); // Inicialmente está carregando
-    const [redirectUrl, setRedirectUrl] = useState('/'); // Adiciona estado para URL de redirecionamento
-    const navigate = useNavigate(); // Define navigate usando o hook useNavigate
+    const [loading, setLoading] = useState(true);
+    const [redirectUrl, setRedirectUrl] = useState('/');
+    const navigate = useNavigate();
 
-    // Função para verificar se o token é válido
     const checkToken = (token) => {
         try {
-            const decoded = jwtDecode(token); // Usando jwtDecode corretamente
-            const currentTime = Date.now() / 1000; // Tempo atual em segundos
-            return decoded.exp > currentTime; // Verifica se o token expirou
+            const decoded = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+            return decoded.exp > currentTime;
         } catch (error) {
             console.error('Erro ao decodificar o token:', error);
-            return false; // Token inválido
+            return false;
         }
     };
 
@@ -27,10 +26,10 @@ export function UserAuthProvider({ children }) {
         if (userToken && checkToken(userToken)) {
             setIsAuthenticated(true);
         } else {
-            localStorage.removeItem('userToken'); // Remove o token expirado ou inválido
+            localStorage.removeItem('userToken');
             setIsAuthenticated(false);
         }
-        setLoading(false); // Define o carregamento como concluído
+        setLoading(false);
     }, []);
 
     const checkAuthentication = () => {
@@ -39,7 +38,7 @@ export function UserAuthProvider({ children }) {
         if (userToken && checkToken(userToken)) {
             setIsAuthenticated(true);
         } else {
-            localStorage.removeItem('userToken'); // Remove o token expirado ou inválido
+            localStorage.removeItem('userToken');
             setIsAuthenticated(false);
         }
         setLoading(false);
@@ -49,7 +48,7 @@ export function UserAuthProvider({ children }) {
         if (checkToken(token)) {
             localStorage.setItem('userToken', token);
             setIsAuthenticated(true);
-            navigate(redirectUrl); // Redireciona para a URL armazenada após o login
+            navigate(redirectUrl);
         } else {
             console.error('Token de usuário inválido ou expirado');
         }

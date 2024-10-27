@@ -21,7 +21,7 @@ function Cadastro() {
     telefone_cliente: ''
   });
 
-  const [errorMessage, setErrorMessage] = useState(''); // Estado para armazenar a mensagem de erro
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +30,7 @@ function Cadastro() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(''); // Limpa a mensagem de erro antes de enviar os dados
+    setErrorMessage('');
 
     try {
       const response = await fetch('http://localhost:5000/cadastro', {
@@ -47,8 +47,8 @@ function Cadastro() {
         console.log('Resposta do backend:', data);
         navigate('/login');
       } else {
-        const errorData = await response.json(); // Captura a resposta de erro do backend
-        setErrorMessage(errorData.error || 'Erro ao realizar o cadastro.'); // Define a mensagem de erro
+        const errorData = await response.json();
+        setErrorMessage(errorData.error || 'Erro ao realizar o cadastro.');
       }
     } catch (error) {
       console.error('Erro ao enviar os dados:', error);
@@ -62,7 +62,6 @@ function Cadastro() {
       <h2 className="text-center mb-4 mt-4">Realize o Cadastro</h2>
 
       <form className="mx-auto" style={{ maxWidth: '500px' }} onSubmit={handleSubmit}>
-        {/* Exibe a mensagem de erro, se houver */}
         {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
         <div className="mb-3">

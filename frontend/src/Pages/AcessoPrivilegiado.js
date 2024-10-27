@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
+import { useAdminAuth } from '../AdminAuthContext';
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -19,27 +19,25 @@ function AcessoPrivilegiado() {
     const [isLoading, setIsLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [novoAdmin, setNovoAdmin] = useState({
-        nome_adm: '', // Ajustado para 'nome'
-        email_adm: '', // Ajustado para 'email'
-        senha_adm: '' // Mantido como 'senha' para o campo de senha
+        nome_adm: '',
+        email_adm: '',
+        senha_adm: ''
     });
     const [erro, setErro] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const navigate = useNavigate();
-    const { isAdminAuthenticated, logoutAdmin } = useAdminAuth(); // Usa o estado de autenticação do admin
+    const { isAdminAuthenticated, logoutAdmin } = useAdminAuth();
 
-    // Verifica se o admin está autenticado
     useEffect(() => {
         if (!isAdminAuthenticated) {
-            navigate('/login-admin'); // Redireciona para a página de login se não estiver autenticado
+            navigate('/login-admin');
         } else {
-            setIsLoading(false); // Desativa o carregamento quando autenticado
+            setIsLoading(false);
         }
     }, [isAdminAuthenticated, navigate]);
 
-    // Função para buscar administradores
     const fetchAdmins = async () => {
-        setIsLoading(true); // Inicia o estado de carregamento
+        setIsLoading(true);
         try {
             const response = await axios.get('http://localhost:5000/admins');
             setAdmins(response.data);
@@ -47,11 +45,10 @@ function AcessoPrivilegiado() {
             console.error('Erro ao buscar administradores:', error);
             setErro('Erro ao buscar administradores.');
         } finally {
-            setIsLoading(false); // Finaliza o estado de carregamento
+            setIsLoading(false);
         }
     };
 
-    // Função para deletar administrador
     const handleDeleteAdmin = async (id) => {
         const confirmDelete = window.confirm('Você tem certeza que deseja excluir este administrador?');
         if (confirmDelete) {

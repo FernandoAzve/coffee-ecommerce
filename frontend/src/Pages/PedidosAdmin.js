@@ -20,7 +20,7 @@ function PedidosAdmin() {
   const navigate = useNavigate();
   const [pedidos, setPedidos] = useState([]);
   const [statusOptions, setStatusOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isAdminAuthenticated && !loading) {
@@ -40,10 +40,10 @@ function PedidosAdmin() {
       });
       setPedidos(response.data.pedidos);
       setStatusOptions(response.data.status);
-      setIsLoading(false); // Definir como falso após carregar os dados
+      setIsLoading(false);
     } catch (error) {
       console.error('Erro ao buscar pedidos:', error);
-      setIsLoading(false); // Definir como falso em caso de erro
+      setIsLoading(false);
     }
   };
 
@@ -55,7 +55,7 @@ function PedidosAdmin() {
           'Authorization': `Bearer ${token}`
         }
       });
-      fetchPedidos(); // Atualiza a lista de pedidos após a mudança de status
+      fetchPedidos();
     } catch (error) {
       console.error('Erro ao atualizar status do pedido:', error);
     }

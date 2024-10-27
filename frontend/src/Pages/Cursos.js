@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Styles/CursosStyles.css'; // Importar os estilos
+import '../Styles/CursosStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';

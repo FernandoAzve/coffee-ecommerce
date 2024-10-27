@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Para redirecionar o usuário
-import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
+import { useNavigate } from 'react-router-dom';
+import { useAdminAuth } from '../AdminAuthContext';
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -21,9 +21,9 @@ function UsuariosAdmin() {
 
   useEffect(() => {
     if (!isAdminAuthenticated) {
-      navigate('/login-admin'); // Redireciona para a página de login se não estiver autenticado
+      navigate('/login-admin');
     } else {
-      fetchClientes(); // Busca os clientes quando o admin está autenticado
+      fetchClientes();
     }
   }, [isAdminAuthenticated, navigate]);
 
