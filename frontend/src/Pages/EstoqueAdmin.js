@@ -136,7 +136,9 @@ const EstoqueAdmin = () => {
                   <td>{`R$ ${produto.preco}`}</td>
                   <td>{produto.quantidade}</td>
                   <td>{produto.categoria}</td>
-                  <td>{produto.imagem}</td>
+                  <td>
+                    <img src={produto.imagem} alt={produto.nome} className="thumbnail" />
+                  </td>
                   <td>
                     <button className="btn btn-link p-0" onClick={() => handleDeleteProduto(produto.id)}>
                       <i className="bi bi-trash"></i>

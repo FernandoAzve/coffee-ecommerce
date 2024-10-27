@@ -91,8 +91,7 @@ function PedidosAdmin() {
                 <th>ID Usuário</th>
                 <th>Produtos</th>
                 <th>Valor</th>
-                <th>Status</th>
-                <th>Alterar Status</th>
+                <th className="status">Status</th>
                 <th>Endereço</th>
               </tr>
             </thead>
@@ -105,7 +104,6 @@ function PedidosAdmin() {
                     <td>#{pedido.id_cliente}</td>
                     <td>{pedido.produtos}</td>
                     <td>R$ {pedido.valor.toFixed(2)}</td>
-                    <td>{statusAtual ? statusAtual.nome_status : 'Desconhecido'}</td>
                     <td>
                       <select
                         className="form-select"
