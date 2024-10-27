@@ -28,7 +28,7 @@ class TodosPedidos(Resource):
 
         for pedido in pedidos:
             status = StatusPedido.query.filter_by(id_status=pedido.id_status).first()
-            cliente = Cliente.query.filter_by(id_cliente=pedido.id_cliente).first()  # Buscar informações do cliente
+            cliente = Cliente.query.filter_by(id_cliente=pedido.id_cliente).first()
             endereco = f"{cliente.endereco_logradouro_cliente}, {cliente.endereco_numero_cliente}, {cliente.endereco_cep_cliente}, {cliente.endereco_complemento_cliente}, {cliente.endereco_bairro_cliente}, {cliente.endereco_cidade_cliente}, {cliente.endereco_estado_cliente}"
             itens_pedido = ItemPedido.query.filter_by(id_pedido=pedido.id_pedido).all()
             produtos = ', '.join([f"{item.quantidade}x {Produto.query.filter_by(id_produto=item.id_produto).first().nome_produto}" for item in itens_pedido])

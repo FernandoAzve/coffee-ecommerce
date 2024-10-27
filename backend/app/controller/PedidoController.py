@@ -42,26 +42,22 @@ class FinalizarPedido(Resource):
         if not all([endereco, numero, cep]):
             return {'error': 'Todos os campos são obrigatórios.'}, 400
 
-        # Verifica se o carrinho do usuário está vazio
         itens_carrinho = Carrinho.query.filter_by(id_cliente=user_id).all()
         if not itens_carrinho:
             return {'error': 'Carrinho vazio.'}, 400
 
-        # Calcula o valor total da compra
         valor_total = sum(item.valor_unitario * item.quantidade for item in itens_carrinho)
 
-        # Cria um novo pedido
         novo_pedido = PedidoCliente(
-            id_status=1,  # Status inicial do pedido
+            id_status=1,
             id_cliente=user_id,
             valor_compra=valor_total,
             data_pedido=func.now()
         )
         db.session.add(novo_pedido)
         db.session.commit()
-        db.session.refresh(novo_pedido)  # Atualiza o objeto para obter o ID gerado
+        db.session.refresh(novo_pedido)
 
-        # Move os itens do carrinho para a tabela de itens do pedido
         for item in itens_carrinho:
             novo_item_pedido = ItemPedido(
                 id_pedido=novo_pedido.id_pedido,
@@ -69,7 +65,7 @@ class FinalizarPedido(Resource):
                 quantidade=item.quantidade
             )
             db.session.add(novo_item_pedido)
-            db.session.delete(item)  # Remove o item do carrinho
+            db.session.delete(item)
 
         db.session.commit()
 

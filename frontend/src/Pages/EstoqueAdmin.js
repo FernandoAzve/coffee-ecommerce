@@ -29,12 +29,11 @@ const EstoqueAdmin = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth(); // Usa o estado de autenticação do admin
+  const { isAdminAuthenticated, logoutAdmin } = useAdminAuth();
 
-  // Verifica se o admin está autenticado
   useEffect(() => {
     if (!isAdminAuthenticated) {
-      navigate('/login-admin'); // Redireciona para a página de login se não estiver autenticado
+      navigate('/login-admin');
     }
   }, [isAdminAuthenticated, navigate]);
 
@@ -99,7 +98,9 @@ const EstoqueAdmin = () => {
   return (
     <div className="home-page">
       <header className="header">
-        <div className="logo">LOGO</div>
+        <div className="logo-container">
+          <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+        </div>
         <nav className="nav">
           <a href="/usuarios-admin">Usuários</a>
           <a href="/pedidos-admin">Pedidos</a>
@@ -136,7 +137,9 @@ const EstoqueAdmin = () => {
                   <td>{`R$ ${produto.preco}`}</td>
                   <td>{produto.quantidade}</td>
                   <td>{produto.categoria}</td>
-                  <td>{produto.imagem}</td>
+                  <td>
+                    <img src={produto.imagem} alt={produto.nome} className="thumbnail" />
+                  </td>
                   <td>
                     <button className="btn btn-link p-0" onClick={() => handleDeleteProduto(produto.id)}>
                       <i className="bi bi-trash"></i>

@@ -1,36 +1,34 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Importação correta
+import { jwtDecode } from 'jwt-decode';
 
 const AdminAuthContext = createContext();
 
 export function AdminAuthProvider({ children }) {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Adiciona estado de carregamento
+  const [loading, setLoading] = useState(true);
 
-  // Função para verificar se o token é válido
   const checkToken = (token) => {
     try {
-      const decoded = jwtDecode(token); // Usando jwtDecode corretamente
-      const currentTime = Date.now() / 1000; // Tempo atual em segundos
-      return decoded.exp > currentTime; // Verifica se o token expirou
+      const decoded = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      return decoded.exp > currentTime;
     } catch (error) {
       console.error('Erro ao decodificar o token:', error);
-      return false; // Token inválido
+      return false;
     }
   };
 
   useEffect(() => {
-    // Verifica o token de administrador
     const adminToken = localStorage.getItem('adminToken');
     if (adminToken && checkToken(adminToken)) {
       console.log('Token válido, autenticando admin');
       setIsAdminAuthenticated(true);
     } else {
       console.log('Token inválido ou expirado, redirecionando para login');
-      localStorage.removeItem('adminToken'); // Remove o token expirado ou inválido
+      localStorage.removeItem('adminToken');
       setIsAdminAuthenticated(false);
     }
-    setLoading(false); // Define o carregamento como concluído
+    setLoading(false);
   }, []);
 
   const loginAdmin = (token) => {

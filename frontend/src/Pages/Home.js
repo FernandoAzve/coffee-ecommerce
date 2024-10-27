@@ -23,7 +23,7 @@ const Shimmer = () => {
 function Home() {
   const [produtos, setProdutos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para controlar a exibição da mensagem de confirmação
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const { isAuthenticated, setRedirectUrl, checkAuthentication } = useUserAuth();
   const navigate = useNavigate();
 
@@ -43,17 +43,17 @@ function Home() {
   }, []);
 
   const handleAddToCart = async (produto) => {
-    checkAuthentication(); // Verifica a autenticação do usuário
+    checkAuthentication();
     if (!isAuthenticated) {
-      setRedirectUrl('/'); // Define a URL de redirecionamento após o login
-      navigate('/login'); // Redireciona para a página de login
+      setRedirectUrl('/');
+      navigate('/login');
     } else {
       try {
         const token = localStorage.getItem('userToken');
         const data = {
           id_produto: produto.id,
-          valor_unitario: parseFloat(produto.preco), // Converte para número
-          quantidade: 1 // Defina a quantidade desejada
+          valor_unitario: parseFloat(produto.preco),
+          quantidade: 1
         };
         console.log('Enviando dados para o backend:', data);
         const response = await axios.post('http://localhost:5000/carrinho', data, {
@@ -62,9 +62,9 @@ function Home() {
           }
         });
         console.log('Produto adicionado ao carrinho:', response.data);
-        setShowConfirmation(true); // Exibir a mensagem de confirmação
+        setShowConfirmation(true);
         setTimeout(() => {
-          setShowConfirmation(false); // Ocultar a mensagem de confirmação após 3 segundos
+          setShowConfirmation(false);
         }, 3000);
       } catch (error) {
         console.error('Erro ao adicionar produto ao carrinho:', error);

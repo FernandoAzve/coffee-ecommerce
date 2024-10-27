@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useAdminAuth } from '../AdminAuthContext'; // Importa o contexto de autenticação
+import { useAdminAuth } from '../AdminAuthContext';
 
 function LoginAdmin() {
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ function LoginAdmin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { loginAdmin } = useAdminAuth(); // Usa a função de login do admin do contexto
+  const { loginAdmin } = useAdminAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,8 +32,8 @@ function LoginAdmin() {
       const data = await response.json();
 
       if (response.ok) {
-        loginAdmin(data.token); // Usa a função de login do contexto para armazenar o token
-        navigate('/pedidos-admin'); // Redireciona para a página de pedidos
+        loginAdmin(data.token);
+        navigate('/pedidos-admin');
       } else {
         setError(data.error || 'Erro ao fazer login');
       }

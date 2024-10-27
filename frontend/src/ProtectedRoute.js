@@ -11,18 +11,18 @@ const ProtectedRoute = ({ children, role }) => {
     console.log('Estado de autenticação do usuário:', isAuthenticated);
 
     if (adminLoading || userLoading) {
-        return <div>Carregando...</div>; // Exibe um indicador de carregamento enquanto verifica a autenticação
+        return <div>Carregando...</div>;
     }
 
     if (role === 'admin') {
         if (!isAdminAuthenticated) {
             console.log('Admin não autenticado, redirecionando para login-admin');
-            return <Navigate to="/login-admin" />; // Redireciona para a página de login do admin
+            return <Navigate to="/login-admin" />;
         }
     } else {
         if (!isAuthenticated) {
             console.log('Usuário não autenticado, redirecionando para login');
-            return <Navigate to="/login" />; // Redireciona para a página de login comum
+            return <Navigate to="/login" />;
         }
     }
 

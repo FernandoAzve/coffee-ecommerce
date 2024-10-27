@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUserAuth } from '../UserAuthContext';
-import '../Styles/HeaderStyles.css'; // Importar os estilos
+import '../Styles/HeaderStyles.css';
 
 function Header() {
   const { isAuthenticated, logoutUser } = useUserAuth();

@@ -1,30 +1,24 @@
 .header {
     background-color: #4b2e2e;
-    /* Cor que remete ao café */
     color: white;
     padding: 0 20px;
-    /* Reduzir o padding para diminuir a altura do header */
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100px;
     margin-bottom: 30px;
-    /* Definir uma altura menor para o header */
 }
 
 .logo-container {
     display: flex;
     align-items: center;
     height: 160%;
-    /* Garantir que a logo ocupe toda a altura do header */
 }
 
 .logo-img {
     height: 80%;
-    /* Ajustar a altura da logo para preencher 80% da altura do header */
     max-height: 100%;
-    /* Garantir que a logo não ultrapasse a altura do header */
 }
 
 .nav-container {
@@ -38,11 +32,9 @@
 .top-bar {
     display: flex;
     justify-content: flex-end;
-    /* Alinha os itens à direita */
     gap: 20px;
     width: 100%;
     margin-bottom: 5px;
-    /* Espaçamento entre a top-bar e a nav */
 }
 
 .top-bar a {
@@ -54,7 +46,6 @@
 
 .top-bar a:hover {
     color: #d3a87c;
-    /* Cor que remete ao café com leite */
 }
 
 .nav {
@@ -65,7 +56,6 @@
 
 .nav a,
 .nav button {
-    /* Aplicar os mesmos estilos aos links e ao botão */
     color: white;
     text-decoration: none;
     font-size: 16px;
@@ -78,7 +68,6 @@
 .nav a:hover,
 .nav button:hover {
     color: #d3a87c;
-    /* Cor que remete ao café com leite */
 }
 
 .bi-cart {

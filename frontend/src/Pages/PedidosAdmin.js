@@ -20,7 +20,7 @@ function PedidosAdmin() {
   const navigate = useNavigate();
   const [pedidos, setPedidos] = useState([]);
   const [statusOptions, setStatusOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isAdminAuthenticated && !loading) {
@@ -40,10 +40,10 @@ function PedidosAdmin() {
       });
       setPedidos(response.data.pedidos);
       setStatusOptions(response.data.status);
-      setIsLoading(false); // Definir como falso após carregar os dados
+      setIsLoading(false);
     } catch (error) {
       console.error('Erro ao buscar pedidos:', error);
-      setIsLoading(false); // Definir como falso em caso de erro
+      setIsLoading(false);
     }
   };
 
@@ -55,7 +55,7 @@ function PedidosAdmin() {
           'Authorization': `Bearer ${token}`
         }
       });
-      fetchPedidos(); // Atualiza a lista de pedidos após a mudança de status
+      fetchPedidos();
     } catch (error) {
       console.error('Erro ao atualizar status do pedido:', error);
     }
@@ -68,7 +68,9 @@ function PedidosAdmin() {
   return (
     <div className="home-page">
       <header className="header">
-        <div className="logo">LOGO</div>
+        <div className="logo-container">
+          <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+        </div>
         <nav className="nav">
           <a href="/usuarios-admin">Usuários</a>
           <a href="/pedidos-admin">Pedidos</a>
@@ -91,21 +93,18 @@ function PedidosAdmin() {
                 <th>ID Usuário</th>
                 <th>Produtos</th>
                 <th>Valor</th>
-                <th>Status</th>
-                <th>Alterar Status</th>
+                <th className="status">Status</th>
                 <th>Endereço</th>
               </tr>
             </thead>
             <tbody>
               {pedidos.map((pedido) => {
-                const statusAtual = statusOptions.find(status => status.id_status === pedido.id_status);
                 return (
                   <tr key={pedido.id_pedido}>
                     <td>#{pedido.id_pedido}</td>
                     <td>#{pedido.id_cliente}</td>
                     <td>{pedido.produtos}</td>
                     <td>R$ {pedido.valor.toFixed(2)}</td>
-                    <td>{statusAtual ? statusAtual.nome_status : 'Desconhecido'}</td>
                     <td>
                       <select
                         className="form-select"
