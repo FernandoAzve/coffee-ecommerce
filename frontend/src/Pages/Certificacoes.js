@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../Styles/CertificacoesStyles.css';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 function Certificacoes() {
   return (
@@ -25,6 +26,7 @@ function Certificacoes() {
           <img src="/cert_rainforest.png" alt="Certificado Rainforest" className="certificacao-img" />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

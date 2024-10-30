@@ -4,6 +4,7 @@ import { useAdminAuth } from '../AdminAuthContext';
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Footer from '../Components/Footer';
 
 const Shimmer = () => {
   return (
@@ -125,6 +126,7 @@ function UsuariosAdmin() {
           </table>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -5,12 +5,25 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
+
+const Shimmer = () => {
+  return (
+    <div className="shimmer-wrapper">
+      <div className="shimmer-circle"></div>
+      <div className="shimmer-line"></div>
+      <div className="shimmer-line"></div>
+      <div className="shimmer-line"></div>
+    </div>
+  );
+};
 
 function Carrinho() {
   const { isAuthenticated, loading } = useUserAuth();
   const navigate = useNavigate();
   const [itensCarrinho, setItensCarrinho] = useState([]);
   const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -30,8 +43,10 @@ function Carrinho() {
         setItensCarrinho(response.data.itens);
         const totalCompra = response.data.itens.reduce((acc, item) => acc + item.valor_unitario * item.quantidade, 0);
         setTotal(totalCompra);
+        setIsLoading(false); // Definir como falso após carregar os dados
       } catch (error) {
         console.error('Erro ao buscar itens do carrinho:', error);
+        setIsLoading(false); // Definir como falso em caso de erro
       }
     };
 
@@ -85,56 +100,65 @@ function Carrinho() {
       <Header />
       <div className="center-content">
         <h2>Carrinho</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Produto</th>
-              <th>Valor Unitário</th>
-              <th>Valor</th>
-              <th>Quantidade</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {itensCarrinho.map((item) => (
-              <tr key={item.id_carrinho}>
-                <td>{item.produto_nome}</td>
-                <td>R$ {item.valor_unitario.toFixed(2)}</td>
-                <td>R$ {(item.valor_unitario * item.quantidade).toFixed(2)}</td>
-                <td>
-                  {item.quantidade}
-                  <div style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '10px' }}>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      style={{ borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                      onClick={() => handleDeduzirItem(item.id_carrinho)}
-                    >
-                      <i className="bi bi-dash"></i>
-                    </button>
-                    <button
-                      className="btn btn-success btn-sm ml-2"
-                      style={{ borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '5px' }}
-                      onClick={() => handleAdicionarItem(item.id_carrinho)}
-                    >
-                      <i className="bi bi-plus"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="total-container">
-          <div className="total">
-            <span>Total: R$ {total.toFixed(2)}</span>
+        {isLoading ? (
+          <div className="shimmer-container">
+            <Shimmer />
           </div>
-          <div className="finalizar-compra">
-            <button className="btn btn-primary" onClick={handleFinalizarCompra}>
-              Finalizar compra
-            </button>
-          </div>
-        </div>
+        ) : (
+          <>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Valor Unitário</th>
+                  <th>Valor</th>
+                  <th>Quantidade</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {itensCarrinho.map((item) => (
+                  <tr key={item.id_carrinho}>
+                    <td>{item.produto_nome}</td>
+                    <td>R$ {item.valor_unitario.toFixed(2)}</td>
+                    <td>R$ {(item.valor_unitario * item.quantidade).toFixed(2)}</td>
+                    <td>
+                      {item.quantidade}
+                      <div style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '10px' }}>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          style={{ borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          onClick={() => handleDeduzirItem(item.id_carrinho)}
+                        >
+                          <i className="bi bi-dash"></i>
+                        </button>
+                        <button
+                          className="btn btn-success btn-sm ml-2"
+                          style={{ borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '5px' }}
+                          onClick={() => handleAdicionarItem(item.id_carrinho)}
+                        >
+                          <i className="bi bi-plus"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="total-container">
+              <div className="total">
+                <span>Total: R$ {total.toFixed(2)}</span>
+              </div>
+              <div className="finalizar-compra">
+                <button className="btn btn-primary" onClick={handleFinalizarCompra}>
+                  Finalizar compra
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
+      <Footer />
     </div>
   );
 }

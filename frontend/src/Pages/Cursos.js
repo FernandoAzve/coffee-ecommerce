@@ -3,6 +3,7 @@ import '../Styles/CursosStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 function Cursos() {
   return (
@@ -53,6 +54,7 @@ function Cursos() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

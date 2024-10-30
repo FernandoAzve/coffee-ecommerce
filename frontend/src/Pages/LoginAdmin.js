@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Footer from '../Components/Footer';
 import { useAdminAuth } from '../AdminAuthContext';
 
 function LoginAdmin() {
@@ -96,6 +97,7 @@ function LoginAdmin() {
           </button>
         </div>
       </form>
+      <Footer />
     </div>
   );
 }
