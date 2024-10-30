@@ -4,6 +4,7 @@ import '../Styles/HomeStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 import axios from 'axios';
 import { useUserAuth } from '../UserAuthContext';
 
@@ -106,6 +107,7 @@ function CafeArabica() {
           Produto adicionado ao carrinho com sucesso!
         </div>
       )}
+      <Footer />
     </div>
   );
 }

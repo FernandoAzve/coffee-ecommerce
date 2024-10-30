@@ -6,6 +6,7 @@ import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import Footer from '../Components/Footer';
 
 const Shimmer = () => {
   return (
@@ -128,6 +129,7 @@ function PedidosAdmin() {
           </table>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

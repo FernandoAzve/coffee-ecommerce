@@ -4,6 +4,7 @@ import { useAdminAuth } from '../AdminAuthContext';
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Footer from '../Components/Footer';
 import axios from 'axios';
 
 const Shimmer = () => {
@@ -18,6 +19,7 @@ function AcessoPrivilegiado() {
     const [admins, setAdmins] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
     const [novoAdmin, setNovoAdmin] = useState({
         nome_adm: '',
         email_adm: '',
@@ -50,6 +52,15 @@ function AcessoPrivilegiado() {
     };
 
     const handleDeleteAdmin = async (id) => {
+        if (admins.length === 1) {
+            setErro('Não é possível excluir o único administrador.');
+            setShowErrorMessage(true);
+            setTimeout(() => {
+                setShowErrorMessage(false);
+            }, 3000);
+            return;
+        }
+
         const confirmDelete = window.confirm('Você tem certeza que deseja excluir este administrador?');
         if (confirmDelete) {
             try {
@@ -195,6 +206,12 @@ function AcessoPrivilegiado() {
                     </form>
                 </div>
             )}
+            {showErrorMessage && (
+                <div className="error-message">
+                    Não é possível excluir o único administrador.
+                </div>
+            )}
+            <Footer />
         </div>
     );
 }

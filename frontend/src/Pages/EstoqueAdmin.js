@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/Admin.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import Footer from '../Components/Footer';
 import axios from 'axios';
 import { useAdminAuth } from '../AdminAuthContext';
 
@@ -228,6 +229,7 @@ const EstoqueAdmin = () => {
           </form>
         </div>
       )}
+      <Footer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 function Cadastro() {
   const navigate = useNavigate();
@@ -232,6 +233,7 @@ function Cadastro() {
           <button type="submit" className="btn btn-primary w-100 py-2">Cadastrar-se</button>
         </div>
       </form>
+      <Footer />
     </div>
   );
 }
