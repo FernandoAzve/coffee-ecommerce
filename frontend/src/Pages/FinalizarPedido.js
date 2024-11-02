@@ -59,6 +59,7 @@ function FinalizarPedido() {
       <h2 className="center-content">Finalizar pedido</h2>
       <form style={{ maxWidth: '300px', margin: '0 auto' }} onSubmit={handleSubmit}>
         <div style={{ marginBottom: '20px' }}>
+          <h5>Endereço</h5>
           <input
             type="text"
             placeholder="Endereço de entrega"
@@ -107,6 +108,27 @@ function FinalizarPedido() {
               borderRadius: '5px'
             }}
           />
+          <h5>Método de Pagamento</h5>
+          <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'inline-block' }}>
+              <input
+                type="radio"
+                id="pix"
+                name="metodoPagamento"
+                value="PIX"
+              />
+              <label htmlFor="pix" style={{ marginLeft: '10px' }}>PIX</label>
+            </div>
+            <div style={{ display: 'inline-block' }}>
+              <input
+                type="radio"
+                id="cartao"
+                name="metodoPagamento"
+                value="Cartão de Crédito"
+              />
+              <label htmlFor="cartao" style={{ marginLeft: '10px' }}>Cartão de Crédito</label>
+            </div>
+          </div>
         </div>
         <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
           Finalizar Pedido
