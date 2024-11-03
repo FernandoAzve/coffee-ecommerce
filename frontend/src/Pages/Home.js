@@ -4,7 +4,7 @@ import '../Styles/HomeStyles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+
 import axios from 'axios';
 import { useUserAuth } from '../UserAuthContext';
 import Carousel from 'react-multi-carousel';
@@ -96,7 +96,7 @@ function Home() {
     <div className="home-page">
       <Header />
       <div className="banner">
-        <Carousel responsive={responsive}>
+        <Carousel responsive={responsive} infinite={true}>
           {produtos.map((produto) => (
             <div key={produto.id} className="carousel-item-container">
               <img
@@ -144,7 +144,7 @@ function Home() {
           Produto adicionado ao carrinho com sucesso!
         </div>
       )}
-      <Footer />
+
     </div>
   );
 }

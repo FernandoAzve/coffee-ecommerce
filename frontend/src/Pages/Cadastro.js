@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+
 
 function Cadastro() {
   const navigate = useNavigate();
@@ -26,7 +26,21 @@ function Cadastro() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name === 'cpf_cliente') {
+      const onlyNumbers = value.replace(/\D/g, '');
+      if (onlyNumbers.length <= 11) {
+        setFormData({
+          ...formData,
+          [name]: onlyNumbers,
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -233,7 +247,7 @@ function Cadastro() {
           <button type="submit" className="btn btn-primary w-100 py-2">Cadastrar-se</button>
         </div>
       </form>
-      <Footer />
+
     </div>
   );
 }

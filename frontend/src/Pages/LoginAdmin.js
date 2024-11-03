@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Footer from '../Components/Footer';
+
 import { useAdminAuth } from '../AdminAuthContext';
 
 function LoginAdmin() {
@@ -49,8 +49,9 @@ function LoginAdmin() {
     <div className="home-page">
       <header className="header">
         <div className="logo-container">
-          <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
-        </div>      </header>
+          <Link to="/login-admin">
+            <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+          </Link>        </div>      </header>
       <h2 className="center-content">Admin</h2>
       <form onSubmit={handleSubmit} style={{ maxWidth: '300px', margin: '0 auto' }}>
         <div style={{ marginBottom: '20px' }}>
@@ -97,7 +98,7 @@ function LoginAdmin() {
           </button>
         </div>
       </form>
-      <Footer />
+
     </div>
   );
 }
