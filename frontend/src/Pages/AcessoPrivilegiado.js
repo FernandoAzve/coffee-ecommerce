@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAdminAuth } from '../AdminAuthContext';
 import '../Styles/Admin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Footer from '../Components/Footer';
 import axios from 'axios';
 
 const Shimmer = () => {
@@ -109,7 +108,9 @@ function AcessoPrivilegiado() {
         <div className="home-page">
             <header className="header">
                 <div className="logo-container">
-                    <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+                    <Link to="/estoque-admin">
+                        <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+                    </Link>
                 </div>
                 <nav className="nav">
                     <a href="/usuarios-admin">Usuários</a>
@@ -211,7 +212,6 @@ function AcessoPrivilegiado() {
                     Não é possível excluir o único administrador.
                 </div>
             )}
-            <Footer />
         </div>
     );
 }

@@ -1,9 +1,21 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-container>.content {
+    flex: 1;
+}
+
 .footer {
     background-color: #4b2e2e;
     color: white;
     padding: 20px 0;
     text-align: center;
-    margin-top: 30px;
+    margin-top: auto;
+    width: 100%;
+    flex-shrink: 0;
 }
 
 .footer-content {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../Styles/Admin.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import Footer from '../Components/Footer';
+
 import axios from 'axios';
 import { useAdminAuth } from '../AdminAuthContext';
 
@@ -100,8 +100,9 @@ const EstoqueAdmin = () => {
     <div className="home-page">
       <header className="header">
         <div className="logo-container">
-          <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
-        </div>
+          <Link to="/estoque-admin">
+            <img src="/logo_cafe_mania.png" alt="Logo" className="logo-img" />
+          </Link>        </div>
         <nav className="nav">
           <a href="/usuarios-admin">Usuários</a>
           <a href="/pedidos-admin">Pedidos</a>
@@ -229,7 +230,7 @@ const EstoqueAdmin = () => {
           </form>
         </div>
       )}
-      <Footer />
+
     </div>
   );
 };

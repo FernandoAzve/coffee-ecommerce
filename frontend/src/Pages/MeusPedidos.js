@@ -5,7 +5,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+
 
 const Shimmer = () => {
   return (
@@ -84,7 +84,6 @@ function MeusPedidos() {
           </table>
         )}
       </div>
-      <Footer />
     </div>
   );
 }

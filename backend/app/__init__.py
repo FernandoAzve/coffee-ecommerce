@@ -25,7 +25,7 @@ def create_app():
     from app.controller.CadastroAdminController import CadastroAdmin
     from app.controller.AdminController import GetAdm, DeleteAdm
     from app.controller.LoginAdminController import AdminLoginController
-    from app.controller.CarrinhoController import CarrinhoController, DeduzirItemCarrinho, AdicionarItemCarrinho, ExcluirItemCarrinho, LimparCarrinho
+    from app.controller.CarrinhoController import CarrinhoController, ExcluirItemCarrinho, LimparCarrinho, AlterarQuantidadeItemCarrinho
     from app.controller.PedidoController import FinalizarPedido, MeusPedidos
     from app.controller.PedidosAdminController import TodosPedidos, AtualizarStatusPedido
 
@@ -44,8 +44,7 @@ def create_app():
     api.add_resource(AdminLoginController, '/admin/login')
 
     api.add_resource(CarrinhoController, '/carrinho')
-    api.add_resource(DeduzirItemCarrinho, '/carrinho/<int:item_id>/deduzir')
-    api.add_resource(AdicionarItemCarrinho, '/carrinho/<int:item_id>/adicionar')
+    api.add_resource(AlterarQuantidadeItemCarrinho, '/carrinho/<int:item_id>/alterar-quantidade')
     api.add_resource(ExcluirItemCarrinho, '/carrinho/<int:item_id>')
     api.add_resource(LimparCarrinho, '/carrinho/limpar')
 

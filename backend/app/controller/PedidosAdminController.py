@@ -60,3 +60,19 @@ class AtualizarStatusPedido(Resource):
         db.session.commit()
 
         return {'message': 'Status do pedido atualizado com sucesso.'}, 200
+
+class ExcluirPedido(Resource):
+    def delete(self, pedido_id):
+        pedido = PedidoCliente.query.filter_by(id_pedido=pedido_id).first()
+        if not pedido:
+            return {'error': 'Pedido não encontrado.'}, 404
+
+        # Excluir itens do pedido
+        itens_pedido = ItemPedido.query.filter_by(id_pedido=pedido_id).all()
+        for item in itens_pedido:
+            db.session.delete(item)
+
+        db.session.delete(pedido)
+        db.session.commit()
+
+        return {'message': 'Pedido excluído com sucesso.'}, 200
