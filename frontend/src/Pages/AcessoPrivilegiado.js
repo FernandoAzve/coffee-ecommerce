@@ -88,7 +88,8 @@ function AcessoPrivilegiado() {
         setIsButtonDisabled(true);
 
         try {
-            await fetchAdmins();
+            const response = await axios.post('http://localhost:5000/admins', novoAdmin);
+            setAdmins(prevAdmins => [...prevAdmins, response.data]);
             setNovoAdmin({ nome_adm: '', email_adm: '', senha_adm: '' });
             setErro('');
             setShowForm(false);
