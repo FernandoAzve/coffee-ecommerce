@@ -23,6 +23,7 @@ Após clonar o projeto em seu ambiente local, siga os passos abaixo:
 2. Crie um arquivo com nome ```.env``` na raíz da pasta ```backend```
 3. Dentro desse arquivo crie a variável ```SQLALCHEMY_DATABASE_URL = mysql://USER:PASSWORD@localhost:PORT/DB_NAME```
 4. Seguindo isso, o backend será capaz de conectar na sua instância do MySQL
+5. Ao configurar o MySQL em seu ambiente local, execute o script ```create_cafemaniadb.sql``` no MySQL para criar o banco de dados ```cafe_mania_db``` e suas tabelas.
 
 ### Backend
 
